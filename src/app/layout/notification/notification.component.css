@@ -1,0 +1,62 @@
+/******* notifications***/
+.notifications {
+  max-width: 200px;
+}
+button {
+  width: 100%;
+  margin-bottom: 1em;
+}
+a span {
+  float: left;
+}
+span.material-icons {
+  margin-top: 0.7em;
+  margin-right: 0.3em;
+  color: rgb(239, 154, 41);
+}
+.task {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+.task .relatedTo {
+  color: rgb(162, 162, 162);
+  font-size: 13px;
+  width: fit-content;
+}
+.task .title {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  line-height: 0;
+  color: #000000bf;
+  padding: 5px;
+}
+span.timeAgo {
+  width: fit-content;
+  font-size: 13px;
+}
+.footer {
+  padding: 4px;
+}
+.footer:hover,
+.footer:focus {
+  background-color: gray;
+}
+.footer a {
+  color: #000;
+}
+.footer a:hover,
+.footer a:focus {
+  color: #fff;
+}
+.task-timeAgo{
+  font-weight: 300;
+  font-size: 10px;
+  font-style: italic;
+}
+.task-timeAgo{
+  color: #c0c0c0;
+}
+li:hover{
+  background-color: #f4f7f6;
+}

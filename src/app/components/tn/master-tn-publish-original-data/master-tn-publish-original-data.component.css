@@ -1,0 +1,27 @@
+.custom-toolbar .header{
+    text-align: center;
+}
+
+rxp-tn-details{
+    margin-left: 3em;
+}
+.rxp-tn-details {
+    margin-left: 25px;
+}
+.rxp-tn-details p {
+    margin-bottom: 1em;
+}
+.rxp-tn-details-title {
+    font-size: 18px;
+    color: #949494;
+    font-weight: bold;
+}
+  .rxp-tn-details-value {
+    font-size: 16px;
+    color: #000;
+    margin-left: 8px;
+}
+.rxp-dialog-action-panel {
+    text-align: center;
+    padding-top: 30px;
+}

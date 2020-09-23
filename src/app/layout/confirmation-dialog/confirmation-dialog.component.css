@@ -1,0 +1,6 @@
+.rxp-modal-xl{
+    max-width: 100% !important;
+}
+.rxp-modal-xl .modal-dialog{
+    max-width: 60% !important;
+}

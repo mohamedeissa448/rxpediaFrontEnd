@@ -1,0 +1,293 @@
+<button
+  type="button"
+  (click)="close()"
+  class="btn rxp-close-dialog-btt mr-1"
+  title="Close"
+>
+  <span class="sr-only">Close</span>
+  <i class="icon-close"></i>
+</button>
+<h2 mat-dialog-title>Edit {{ interactionType }} </h2>
+<mat-dialog-content>
+  <!-- Start food Container -->
+  <ng-container *ngIf="interactionType=='FoodInteractions'">
+    <mat-form-field class="rxp-full-width-container">
+      <input
+        type="text"
+        placeholder="Pick one Food"
+        aria-label="Food"
+        matInput
+        [formControl]="foodSelectControl"
+        [matAutocomplete]="autoFood"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #autoFood="matAutocomplete"
+        [displayWith]="displayFoodFnction"
+      >
+        <mat-option
+          *ngFor="let foodItem of foodFilteredOptions | async"
+          [value]="foodItem"
+        >
+          {{ foodItem.Food_Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </ng-container>
+  <!-- End food Container -->
+
+  <!-- Start AI Container -->
+  <ng-container *ngIf="interactionType == 'DrugInteractions'">
+    <mat-form-field class="rxp-full-width-container">
+      <input
+        type="text"
+        placeholder="Pick one Active Ingredient"
+        aria-label="Drug"
+        [formControl]="drugSelectControl"
+        [matAutocomplete]="autoActiveIngredient"
+        matInput
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #autoActiveIngredient="matAutocomplete"
+        [displayWith]="displayDrugFnction"
+        [(ngModel)]="InteractionRevision_AI_Code"
+      >
+        <mat-option
+          *ngFor="let drugItem of drugFilteredOptions | async"
+          [value]="drugItem"
+        >
+          {{ drugItem.AI_Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </ng-container>
+  <!-- End AI Container -->
+
+  <!-- Start Lab Test Container -->
+  <ng-container *ngIf="interactionType == 'LabTestsInteractions'">
+    <mat-form-field class="rxp-full-width-container">
+      <input
+        type="text"
+        placeholder="Pick one Lab Test"
+        aria-label="Lab Test"
+        [formControl]="labtestSelectControl"
+        [matAutocomplete]="autoLabTest"
+        matInput
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #autoLabTest="matAutocomplete"
+        [displayWith]="displayLabtestFnction"
+      >
+        <mat-option
+          *ngFor="let labtestItem of labtestFilteredOptions | async"
+          [value]="labtestItem"
+        >
+          {{ labtestItem.LabTest_Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </ng-container>
+  <!-- End Lab Test Container -->
+
+  <!-- Start Herbs Container -->
+  <ng-container *ngIf="interactionType == 'HerbsInteractions'">
+    <mat-form-field class="rxp-full-width-container">
+      <input
+        type="text"
+        placeholder="Pick one Herbs"
+        aria-label="Herbs"
+        [formControl]="herbsSelectControl"
+        [matAutocomplete]="autoHerbs"
+        matInput
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #autoHerbs="matAutocomplete"
+        [displayWith]="displayHerbsFnction"
+      >
+        <mat-option
+          *ngFor="let herbsItem of herbsFilteredOptions | async"
+          [value]="herbsItem"
+        >
+          {{ herbsItem.Herbs_Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </ng-container>
+  <!-- End Herbs Container -->
+
+  <!--Start Alcohol Herbs Container -->
+  <ng-container *ngIf="interactionType == 'AlcoholInteractions'">
+    <mat-form-field class="rxp-full-width-container">
+      <mat-label>Alcohol & Tobacco</mat-label>
+      <mat-select
+        
+        [(ngModel)]="InteractionRevision_Alcohol_Code"
+      >
+        <mat-option
+          *ngFor="let alcoholItem of InteractionFullData.ActiveAlcohol"
+          [value]="alcoholItem.Alcohol_Code"
+        >
+          {{ alcoholItem.Alcohol_Name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  <!--End Alcohol Herbs Container -->
+
+  <!--Start Interaction Rest Of data  -->
+  <ng-container>
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-form-field class="rxp-full-width-container">
+          <mat-label>Interaction Severity</mat-label>
+          <mat-select
+            [(ngModel)]="InteractionRevision_Severity"
+          >
+            <mat-option
+              *ngFor="
+                let interactionSeverity of InteractionFullData.InteractionSeverity
+              "
+              [value]="interactionSeverity.InteractionSeverity_Code"
+            >
+              {{ interactionSeverity.InteractionSeverity_Name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-4">
+        <mat-form-field class="rxp-full-width-container">
+          <mat-label>Interaction Level</mat-label>
+          <mat-select
+            [(ngModel)]="InteractionRevision_Level"
+          >
+            <mat-option
+              *ngFor="
+                let interactionLevel of InteractionFullData.InteractionLevel
+              "
+              [value]="interactionLevel.InteractionLevel_Code"
+            >
+              {{ interactionLevel.InteractionLevel_Name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4">
+        <mat-form-field class="rxp-full-width-container">
+          <mat-label>Interaction Reliability</mat-label>
+          <mat-select
+            [(ngModel)]="InteractionRevision_Reliability"
+          >
+            <mat-option
+              *ngFor="
+                let interactionliability of InteractionFullData.InteractionReliability
+              "
+              [value]="interactionliability.InteractionReliability_Code"
+            >
+              {{ interactionliability.InteractionReliability_Name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field class="rxp-full-width-container">
+      <mat-label>Alert</mat-label>
+      <textarea
+        class="rxp-text-area"
+        matInput
+        placeholder="Enter Interaction Alert"
+        [(ngModel)]="InteractionRevision_Alert"
+      ></textarea>
+    </mat-form-field>
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [ngClass]="{ active: navTab == 'patientmanagement' }"
+          (click)="changeNavTab('patientmanagement')"
+        >
+          Patient Management
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [ngClass]="{ active: navTab == 'discussion' }"
+          (click)="changeNavTab('discussion')"
+        >
+          Discussion
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [ngClass]="{ active: navTab == 'reference' }"
+          (click)="changeNavTab('reference')"
+        >
+          Reference
+        </a>
+      </li>
+    </ul>
+    <div class="tab-page-containers tab-content">
+      <div
+        class="tab-pane"
+        id="patientmanagement"
+        [ngClass]="{ active: navTab == 'patientmanagement' || !navTab }"
+      >
+        <section>
+          <h3>Patient Management</h3>
+          <editor
+            [(ngModel)]="InteractionRevision_Patient_Management"
+            name="InteractionPatientManagment"
+            
+            [init]="EditorConfiguration"
+          ></editor>
+        </section>
+      </div>
+      <div
+        class="tab-pane"
+        id="discussion"
+        [ngClass]="{ active: navTab == 'discussion' || !navTab }"
+      >
+        <section>
+          <h3>Discussion</h3>
+          <editor
+            [(ngModel)]="InteractionRevision_Discussion"
+            name="InteractionDiscussion"
+            
+            [init]="EditorConfiguration"
+          ></editor>
+        </section>
+      </div>
+      <div
+        class="tab-pane"
+        id="reference"
+        [ngClass]="{ active: navTab == 'reference' || !navTab }"
+      >
+        <section>
+          <h3>Reference</h3>
+          <editor
+            [(ngModel)]="InteractionRevision_Reference"
+            name="InteractionReference"
+            
+            [init]="EditorConfiguration"
+          ></editor>
+        </section>
+      </div>
+    </div>
+  </ng-container>
+  <div class="rxp-dialog-action-panel">
+    <button
+      type="button"
+      class="btn btn-success mr-1"
+      title="Add Interaction"
+      (click)="save()"
+    >
+      <i class="fa fa-check"></i>&nbsp;<span>Edit Interaction</span>
+    </button>
+  </div>
+</mat-dialog-content>

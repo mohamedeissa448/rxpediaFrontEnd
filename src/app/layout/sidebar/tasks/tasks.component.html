@@ -1,0 +1,47 @@
+
+<div class="edit-tasks" *ngFor="let grouptask of GroupedTasksList | keyvalue">
+    <!-- <div *ngIf="hasValue(grouptask)"> -->
+        <span class="material-icons edit-task-icon" *ngIf="grouptask.key.substr(2)=='Edit'">edit</span>
+        <span class="material-icons edit-task-icon" *ngIf="grouptask.key.substr(2)=='Review'" >remove_red_eye</span>
+        <span class="material-icons edit-task-icon" *ngIf="grouptask.key.substr(2)=='Grammer Review'" >outlined_flag</span>
+        <span class="material-icons edit-task-icon" *ngIf="grouptask.key.substr(2)=='Publish'" >cloud_upload</span>
+        <h5>{{grouptask.key.substr(2)}}</h5>
+    <!-- </div> -->
+    <div class="sub-grouped-tasks-container">
+        <div class="task-subgroup-subcontainer" *ngFor="let task of grouptask.value | keyvalue">
+            <h6 class="task-type-header" *ngIf="task.value.length > 0">{{task.key}} <span class="task-count">Count: {{task.value.length}}</span></h6>
+            <ul class="choose-skin list-unstyled task-subgroup-list">
+                <li class="taskl-list-item" *ngFor="let task of task.value" (click)="goToRoute(task)">
+                    <div class="task-list">
+                        <span class="task-title">{{ task.Task_Title }}</span>
+                        <!-- <span class="task-timeAgo">{{ moment(task.Task_AssignDate).startOf('hour').fromNow() }}</span> -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- <div class="edit-tasks" *ngIf="editTasks">
+    <span class="material-icons edit-task-icon">edit</span><h5>Edit Tasks</h5>
+    <div class="sub-grouped-tasks-container">
+        <div class="task-subgroup-subcontainer" *ngFor="let task of editTasks | keyvalue">
+            <h6 class="task-type-header" *ngIf="task.value.length > 0">{{task.key}} <span class="task-count">Count: {{task.value.length}}</span></h6>
+            <ul class="choose-skin list-unstyled task-subgroup-list">
+                <li class="taskl-list-item" *ngFor="let task of task.value"
+                    routerLink="/ai/master-ai-edit-clinical-data/{{task.Task_Title}}"
+                    [queryParams]="{
+                    Task_Title: task.Task_Title,
+                    revisionid: task.Task_ActionDetails_Code,
+                    taskid: task.Task_Code,
+                    aicode: task.Task_RelatedTo_Code
+                    }"
+                >
+                    <div class="task-list">
+                        <span class="task-title">{{ task.Task_Title }}</span>
+                        <span class="task-timeAgo">{{ moment(task.Task_AssignDate).startOf('hour').fromNow() }}</span>
+                      </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> -->

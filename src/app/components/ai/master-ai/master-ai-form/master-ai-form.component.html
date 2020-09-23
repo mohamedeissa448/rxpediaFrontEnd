@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="MasterAIService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="AI Name*" formControlName="AI_Name" />
+      <mat-error>Please enter an AI Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <input type="text" #name placeholder="Add Alternative name" />
+    <button type="button" (click)="fff(name.value); name.value = ''">
+      ADD
+    </button>
+     <mat-form-field>
+      <mat-chip-list matInput formArrayName="AI_Alternative_Name">
+        <mat-chip
+          *ngFor="
+            let name of MasterAIService.form.get('AI_Alternative_Name')
+              ['controls'];
+            let i = index
+          "
+        >
+          {{ name.value }}
+          <span class="material-icons close-icon" (click)="deleteName(i)">
+            close
+          </span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field> 
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder="Pick category"
+        aria-label="Number"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedCategory()"
+        #auto="matAutocomplete"
+        [displayWith]="displayFn"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option.Pharmaceutical_Category_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+    <br />
+     <mat-form-field>
+      <mat-chip-list matInput formArrayName="pharamaceutical">
+        <mat-chip
+          *ngFor="
+            let category of MasterAIService.form.get('pharamaceutical')['controls']
+          "
+        >
+          {{ category.value.Pharmaceutical_Category_Name }}&nbsp;&nbsp;{{
+            category.value.Pharmaceutical_Category_ATC_Code
+          }}
+          <span hidden>{{ category.value.Pharmaceutical_Category_Code }}</span>
+          <span hidden>{{
+            category.value.Pharmaceutical_Category_ATC_Code
+          }}</span>
+
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedCategory($event)"
+          >
+            close
+          </span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field> 
+    <mat-divider></mat-divider>
+     <div formArrayName="AI_ATC_Code">
+      <mat-form-field
+        *ngFor="
+          let category of MasterAIService.form.get('pharamaceutical')['controls'];
+          let i = index
+        "
+      >
+        <mat-label>
+          {{
+            category.value.Pharmaceutical_Category_Name +
+              " Related ATC
+          Code*"
+          }}&nbsp;&nbsp;Hint:
+          {{ category.value.Pharmaceutical_Category_ATC_Code }}
+        </mat-label>
+        <input
+          matInput
+          required
+          [formControlName]="i"
+          [placeholder]="
+            'Hint: ' + category.value.Pharmaceutical_Category_ATC_Code
+          "/><br
+      /></mat-form-field>
+    </div> 
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="MasterAIService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

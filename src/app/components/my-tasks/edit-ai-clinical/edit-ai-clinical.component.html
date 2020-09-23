@@ -1,0 +1,805 @@
+<mat-toolbar
+  class="fixed-header mat-hue-2 rxp-incontent-main-header"
+  layout="row"
+  style="height: auto;background-color: rgb(22,145,120);color: beige;"
+>
+  <div
+    flex="40"
+    flex-xs="100"
+    layout="column"
+    layout-align="center start"
+    style="width: 15%;float: left;"
+  >
+    <span class="rxp-main-lable">AI Name: {{ queryParams["Task_Title"] }}</span>
+  </div>
+  <div
+    flex="40"
+    flex-xs="100"
+    layout="column"
+    layout-align="center end"
+    style="width: 30%;margin: auto;"
+  >
+    <span class="rxp-secondary-lable"
+      >ATC Code:[' {{ aiToEdit.AI_ATC_Code }}']</span
+    >
+  </div>
+  <div flex="20" flex-xs="100" layout="column" layout-align="center end">
+    <button mat-raised-button color="primary" (click)="submitData()">
+      Save
+    </button>
+  </div>
+</mat-toolbar>
+<form #f="ngForm">
+  <!--<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        id="home-tab"
+        data-toggle="tab"
+        href="#home"
+        role="tab"
+        aria-controls="home"
+        aria-selected="true"
+        >Administration</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="profile-tab"
+        data-toggle="tab"
+        href="#profile"
+        role="tab"
+        aria-controls="profile"
+        aria-selected="false"
+        >Rest AI Fields</a
+      >
+    </li>
+  </ul>-->
+
+  <!-- start administration links-->
+  <br />
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="panel-group" id="accordion1">
+        <div class="panel panel-primary" *ngFor="let group of allLinks">
+          <div class="panel-heading">
+            <a
+              class="collapsed pull-right"
+              data-toggle="collapse"
+              data-parent="#accordion1"
+              [href]="'#' + group.id"
+            >
+              <div class="accordion-icon"></div>
+            </a>
+            <h4 class="panel-title">{{ group.title }}</h4>
+          </div>
+          <div [id]="group.id" class="panel-collapse collapse">
+            <ul class="list-group">
+              <li class="list-group-item" id="accordion11">
+                <a
+                  class="collapsed pull-right"
+                  data-toggle="collapse"
+                  data-parent="#accordion11"
+                  href="#collapseOneOne"
+                >
+                </a>
+
+                <ul class="list-unstyled">
+                  <li *ngFor="let link of group.nodes">
+                    <a
+                      [href]="url + '#' + link.id"
+                      id="111"
+                      style="text-decoration: underline;"
+                    >
+                      {{ link.title }}</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <section id="Rectal">
+        <h3>Administration Rectal</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Rectal"
+          name="AIMasterRevision_Administration_Rectal"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Oral">
+        <h3>Administration Oral</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Oral"
+          name="AIMasterRevision_Administration_Oral"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Intravenous">
+        <h3>Intravenous</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Administration">
+        <!--not sure-->
+        <h3>Administration IV</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Intravenous"
+          name="AIMasterRevision_Administration_Intravenous"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Auricular">
+        <!--not sure-->
+        <h3>Auricular</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Buccal">
+        <h3>Buccal</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Conjunctival">
+        <h3>Conjunctival</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Cutaneous">
+        <h3>Cutaneous</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Dental">
+        <h3>Dental</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="ElectroOsmosis">
+        <h3>ElectroOsmosis</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Endocervical">
+        <h3>Endocervical</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Endosinusial">
+        <h3>Endosinusial</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Endotracheal">
+        <h3>Endotracheal</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Enteral">
+        <h3>Enteral</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Epidural">
+        <h3>Epidural</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="ExtraAmniotic">
+        <h3>ExtraAmniotic</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Extracorporeal">
+        <h3>Extracorporeal</h3>
+        <editor
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!----------------------------------------------------------->
+      <!-- Alerts-->
+      <section id="BlackBoxWarning">
+        <h3>US Box Warning</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_USBoxedWarning"
+          name="AIMasterRevision_USBoxedWarning"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <section id="FDAFeed">
+        <h3>FDA Feed</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_FDAFeed"
+          name="AIMasterRevision_FDAFeed"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <section id="EUFeed">
+        <h3>EU Feed</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_EUFeed"
+          name="AIMasterRevision_EUFeed"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--Adverse reaction-->
+      <section id="AdverseReactions">
+        <h3>Adverse Reactions</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Adverse_Reactions"
+          name="AIMasterRevision_Adverse_Reactions"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <section id="AllergyAndIdiosyncraticReactions">
+        <h3>Allergy & Idiosyncratic Reactions</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_Allergy_Idiosyncratic_Reactions
+          "
+          name="AIMasterRevision_Allergy_Idiosyncratic_Reactions"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--Toxicology ,has no nodes-->
+      <section id="Toxicology">
+        <h3>Toxicology</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Toxicology"
+          name="AIMasterRevision_Toxicology"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--no nodes-->
+      <section id="ClinicalPracticeGuidelines">
+        <h3>AI Clinical Practice Guidelines</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_Clinical_Practice_Guidelines
+          "
+          name="AIMasterRevision_Clinical_Practice_Guidelines"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--no nodes-->
+      <section id="ComparativeEfficacy">
+        <h3>Comparative Efficacy</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Comparative_Efficacy"
+          name="AIMasterRevision_Comparative_Efficacy"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--no nodes-->
+      <section id="IVCompatibility">
+        <h3>IV Compatibility</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Compatibility"
+          name="AIMasterRevision_Compatibility"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--not sure-->
+      <section id="Co">
+        <h3>Country Based Alert</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Alert"
+          name="AIMasterRevision_Alert"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!-- interactions-->
+      <section id="In">
+        <mat-toolbar class="interactions"
+          >Interactions
+          <button class="btn btn-primary">Add</button></mat-toolbar
+        >
+
+        <h5>Food Interactions</h5>
+        <div *ngIf="InterActionFood[0]">
+          <mat-list
+            role="list"
+            *ngFor="let interactionDetail of InterActionFood"
+          >
+            <mat-list-item role="listitem"
+              >{{ interactionDetail.Food_Name }}
+              <button (click)="DeleteInteraction(interactionDetail)">
+                delete
+              </button>
+              <button (click)="OpenInteractionEditForm(interactionDetail)">
+                edit
+              </button>
+            </mat-list-item>
+            <mat-list-item role="listitem"
+              >Severity: {{ interactionDetail.Severity_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Level: {{ interactionDetail.Level_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Reliability:
+              {{ interactionDetail.Reliability_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Alert: {{ interactionDetail.Alert }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Patient Management:
+              {{ interactionDetail.Patient_Managment }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Discussion: {{ interactionDetail.Discusion }}</mat-list-item
+            >
+            <h4>Details</h4>
+            <input [(ngModel)]="interactionDetail.Note" />
+            <h4>Reference</h4>
+            <input [(ngModel)]="interactionDetail.Reffrerance" />
+          </mat-list>
+        </div>
+
+        <div *ngIf="!InterActionFood[0]">No Food Interaction</div>
+      </section>
+      <section>
+        <h5>Drug Interactions</h5>
+        <div *ngIf="InterActionAI[0]">
+          <mat-list role="list" *ngFor="let interactionDetail of InterActionAI">
+            <mat-list-item role="listitem"
+              >{{ interactionDetail.AI_Name }}
+              <button
+                (click)="DeleteInteraction(interactionDetail)"
+                class="btn btn-primary"
+              >
+                delete
+              </button>
+              <button
+                (click)="OpenInteractionEditForm(interactionDetail)"
+                class="btn btn-warning"
+              >
+                edit
+              </button>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <strong>Severity</strong> :
+              {{ interactionDetail.Severity_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              ><strong>Level</strong>:
+              {{ interactionDetail.Level_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              ><strong>Reliability</strong>:
+              <span>{{ interactionDetail.Reliability_Name }}</span
+              ><br
+            /></mat-list-item>
+
+            <mat-list-item role="listitem"
+              ><strong>Alert</strong>: <span>{{ interactionDetail.Alert }}</span
+              ><br
+            /></mat-list-item>
+
+            <mat-list-item role="listitem"
+              ><strong>Patient Management</strong>:
+              <span>{{ interactionDetail.Patient_Managment }}</span
+              ><br />
+            </mat-list-item>
+            <mat-list-item role="listitem"
+              ><strong>Discussion</strong>:
+              <span>{{ interactionDetail.Discusion }}</span
+              ><br />
+            </mat-list-item>
+            <h4>Details</h4>
+            <div [innerHTML]="interactionDetail.Note"></div>
+            <h4>Reference</h4>
+            <div [innerHTML]="interactionDetail.Reffrerance"></div>
+          </mat-list>
+        </div>
+        <div *ngIf="!InterActionAI[0]">No Drug Interaction</div>
+      </section>
+
+      <section>
+        <h5>Lab Tests Interactions</h5>
+        <div *ngIf="InterActionLabTest[0]">
+          <mat-list
+            role="list"
+            *ngFor="let interactionDetail of InterActionLabTest"
+          >
+            <mat-list-item role="listitem"
+              >{{ interactionDetail.Food_Name }}
+              <button (click)="DeleteInteraction(interactionDetail)">
+                delete
+              </button>
+              <button (click)="OpenInteractionEditForm(interactionDetail)">
+                edit
+              </button>
+            </mat-list-item>
+            <mat-list-item role="listitem"
+              >Severity: {{ interactionDetail.Severity_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Level: {{ interactionDetail.Level_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Reliability:
+              {{ interactionDetail.Reliability_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Alert: {{ interactionDetail.Alert }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Patient Management:
+              {{ interactionDetail.Patient_Managment }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Discussion: {{ interactionDetail.Discusion }}</mat-list-item
+            >
+            <h4>Details</h4>
+            <input [(ngModel)]="interactionDetail.Note" />
+            <h4>Reference</h4>
+            <input [(ngModel)]="interactionDetail.Reffrerance" />
+          </mat-list>
+        </div>
+        <div *ngIf="!InterActionLabTest[0]">No Lab Tests Interaction</div>
+      </section>
+      <section>
+        <h5>Herbs Interactions</h5>
+        <div *ngIf="InterActionHerbs[0]">
+          <mat-list
+            role="list"
+            *ngFor="let interactionDetail of InterActionHerbs"
+          >
+            <mat-list-item role="listitem"
+              >{{ interactionDetail.Food_Name }}
+              <button (click)="DeleteInteraction(interactionDetail)">
+                delete
+              </button>
+              <button (click)="OpenInteractionEditForm(interactionDetail)">
+                edit
+              </button>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              {{ interactionDetail.Herbs_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Severity: {{ interactionDetail.Severity_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Level: {{ interactionDetail.Level_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Reliability:
+              {{ interactionDetail.Reliability_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Alert: {{ interactionDetail.Alert }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Patient Management:
+              {{ interactionDetail.Patient_Managment }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Discussion: {{ interactionDetail.Discusion }}</mat-list-item
+            >
+            <h4>Details</h4>
+            <input [(ngModel)]="interactionDetail.Note" />
+            <h4>Reference</h4>
+            <input [(ngModel)]="interactionDetail.Reffrerance" />
+          </mat-list>
+        </div>
+        <div *ngIf="!InterActionLabTest[0]">No Herbs Interaction</div>
+      </section>
+      <section>
+        <h5>Alcohol & Tobacco Interactions</h5>
+        <div *ngIf="InterActionAlcohol[0]">
+          <mat-list
+            role="list"
+            *ngFor="let interactionDetail of InterActionAlcohol"
+          >
+            <mat-list-item role="listitem"
+              >{{ interactionDetail.Food_Name }}
+              <button (click)="DeleteInteraction(interactionDetail)">
+                delete
+              </button>
+              <button (click)="OpenInteractionEditForm(interactionDetail)">
+                edit
+              </button>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              {{ interactionDetail.Alcohol_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Severity: {{ interactionDetail.Severity_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Level: {{ interactionDetail.Level_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Reliability:
+              {{ interactionDetail.Reliability_Name }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Alert: {{ interactionDetail.Alert }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Patient Management:
+              {{ interactionDetail.Patient_Managment }}</mat-list-item
+            >
+            <mat-list-item role="listitem"
+              >Discussion: {{ interactionDetail.Discusion }}</mat-list-item
+            >
+            <h4>Details</h4>
+            <input [(ngModel)]="interactionDetail.Note" />
+            <h4>Reference</h4>
+            <input [(ngModel)]="interactionDetail.Reffrerance" />
+          </mat-list>
+        </div>
+        <div *ngIf="!InterActionAlcohol[0]">
+          No Alcohol or Tobacco Interaction
+        </div>
+      </section>
+      <br />
+      <!-- no nodes  -->
+
+      <section id="MedicationSafetyIssues">
+        <h3>Medication Safety Issues</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Medication_Safety_Issues"
+          name="AIMasterRevision_Medication_Safety_Issues"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!-- PatientAndTherapyManagement -->
+
+      <br />
+      <section id="MonitoringParameters">
+        <h3>Monitoring Parameters</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Monitoring_Parameters"
+          name="AIMasterRevision_Monitoring_Parameters"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="NursingConsiderations">
+        <h3>Nursing Considerations</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Nursing_Considerations"
+          name="AIMasterRevision_Nursing_Considerations"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="AdvancedPractitionersPhysicalAssessmentMonitoring">
+        <h3>Advanced Practitioners Physical Assessment Monitoring</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_Advanced_Practitioners_Physical_Assessment_Monitoring
+          "
+          name="AIMasterRevision_Advanced_Practitioners_Physical_Assessment_Monitoring"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="NursingPhysicalAssessment/Monitoring">
+        <h3>Nursing Physical Assessment Monitoring</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_Nursing_Physical_Assessment_Monitoring
+          "
+          name="AIMasterRevision_Nursing_Physical_Assessment_Monitoring"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="MechanismOfAction">
+        <h3>Mechanism Of Action</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Mechanism_Of_Action"
+          name="AIMasterRevision_Mechanism_Of_Action"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!-- PharmacoKinetics -->
+      <br />
+      <section id="PharmacoKinetics">
+        <h3>Pharmacokinetics</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Pharmacodynamics_Kinetics"
+          name="AIMasterRevision_Pharmacodynamics_Kinetics"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="PharmacoKineticsAdditionalConsiderations">
+        <h3>Pharmacokinetics Additional Considerations</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_Pharmacodynamics_Kinetics_Additional_Considerations
+          "
+          name="AIMasterRevision_Pharmacodynamics_Kinetics_Additional_Considerations"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--Indications-->
+      <br />
+      <section id="LabeledIndications">
+        <h3>Uses Labeled Indications</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_UsaageLabeledIndications"
+          name="AIMasterRevision_UsaageLabeledIndications"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <!--not sure-->
+      <br />
+      <section id="Nu">
+        <h3>Related Information</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Related_Information"
+          name="AIMasterRevision_Related_Information"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+
+      <!-- not sure-->
+      <br />
+      <section id="Us">
+        <h3>Uses Unsupported</h3>
+        <editor
+          [(ngModel)]="
+            ClinicalData.AIMasterRevision_UsaageOffLabeledIndications
+          "
+          name="AIMasterRevision_UsaageOffLabeledIndications"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="Co">
+        <h3>Contraindications</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Contraindications"
+          name="ClinicalData.AIMasterRevision_Contraindications"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <!--WarningsPrecautions -->
+      <section id="WarningsPrecautions">
+        <h3>Warnings Precautions</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Warnings_Precautions"
+          name="AIMasterRevision_Warnings_Precautions"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+      <br />
+      <section id="GeriatricConsiderations">
+        <h3>Geriatric Considerations</h3>
+        <editor
+          [(ngModel)]="ClinicalData.AIMasterRevision_Geriatric_Considerations"
+          name="AIMasterRevision_Geriatric_Considerations"
+          
+          [init]="{ plugins: 'link', height: '600px' }"
+        ></editor>
+      </section>
+
+      <button type="submit" class="btn btn-primary" (click)="submitData()">
+        Save
+      </button>
+      <button type="button" class="btn btn-primary" (click)="SubmitToReview()">
+        Submit AI To Review
+      </button>
+    </div>
+  </div>
+  <!-- end administration links-->
+  <!--<  <div
+      class="tab-pane fade"
+      id="profile"
+      role="tabpanel"
+      aria-labelledby="profile-tab"
+    >
+       start rest links
+      div class="row">
+        <div class="col-sm-2">
+          <div class="panel-group" id="accordion2">
+            <div class="panel panel-primary" *ngFor="let item of restLinks">
+              <div class="panel-heading">
+                <a
+                  class="collapsed pull-right"
+                  data-toggle="collapse"
+                  data-parent="#accordion2"
+                  [href]="'#' + item.id"
+                >
+                  <div class="accordion-icon"></div>
+                </a>
+                <h4 class="panel-title">{{ item.title }}</h4>
+              </div>
+              <div [id]="item.id" class="panel-collapse collapse">
+                <ul class="list-unstyled">
+                  <li *ngFor="let node of item.nodes">
+                    <a [href]="url + '#' + link.id" id="211">{{
+                      node.title
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          
+        </div><-->
+  <!-- end rest links-->
+</form>

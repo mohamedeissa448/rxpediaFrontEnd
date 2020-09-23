@@ -1,0 +1,196 @@
+
+@import "../../../../assets/css/chatapp.css";
+.accordion-icon {
+  font-family: FontAwesome;
+  color: #ffffff;
+}
+.panel-collapse .accordion-icon {
+  color: rgb(51, 122, 183);
+}
+
+#accordion1 .panel-heaing {
+  /* background: */
+  background-color: red;
+}
+#accordion1 .panel-collapse .list-group-item {
+  background: #f9f9f9;
+}
+#accordion1 .panel-collapse .list-group-item:hover {
+  background: #f0f0f0;
+}
+
+#accordion1 .panel-heading a > .accordion-icon:after {
+  content: "\f068";
+  color: #000;
+}
+#accordion1 .panel-heading a.collapsed > .accordion-icon:after {
+  content: "\f067";
+  color: #ffffff;
+}
+
+#accordion1 .panel-collapse .list-group-item > a > .accordion-icon:after {
+  content: "\f056";
+  color: #000000;
+}
+#accordion1
+  .panel-collapse
+  .list-group-item
+  > a.collapsed
+  > .accordion-icon:after {
+  content: "\f055";
+  color: #000000;
+}
+
+.list-unstyled a {
+  text-decoration: underline;
+}
+.list-unstyled a:hover {
+  color: green;
+}
+/******  interactions ****/
+.interactions {
+  background-color: cadetblue;
+  color: aliceblue;
+  display: block;
+}
+.interactions button {
+  float: right;
+}
+.taskl-list-item{
+  padding: 2px 0 2px 0px;
+}
+.taskl-list-item:hover, .taskl-list-item-active{
+  padding-left: 3px;
+}
+.sub-task-list-group{
+  margin-left: 10px !important;
+}
+.task-subgroup-list li:last-child {
+  border-bottom-color: transparent !important;
+}
+.rxp-parent-list-item.taskl-list-item-active {
+  border: none !important;
+  background-color: #fff !important;
+}
+.rxp-parent-list-item.taskl-list-item-active .has-arrow::after {
+  transform: rotate(-135deg) translate(0, -50%);
+}
+.tab-content{
+  padding: 0 15px 16px 15px !important;
+}
+.tab-content .rxp-left-sticky-menu{
+  padding-top: 15px !important;
+}
+.rxp-left-sticky-menu{
+  position: -webkit-sticky;
+  position: sticky;
+  overflow-y: scroll;
+  height: calc(100vh - 123px);
+}
+.rxp-interation-details {
+  margin-left: 25px;
+}
+.rxp-interation-details p {
+  margin-bottom: 0px;
+}
+.rxp-interation-details-title {
+  font-size: 18px;
+  color: #949494;
+  font-weight: bold;
+}
+.rxp-interation-details-value {
+  font-size: 16px;
+  color: #000;
+  margin-left: 8px;
+  margin-right: 15px;
+}
+.rxp-interation-details-html {
+  margin-right: 20px;
+  padding-bottom: 16px;
+  padding: 15px 10px 15px 20px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ecefee;
+}
+.rxp-interation-details-reference{
+  border-bottom: none;
+}
+.rxp-interaction-container {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #dee2e6;
+}
+.rxp-interaction-item-title{
+  font-size: 24px;
+}
+.rxp-interaction-item-title .icon-arrow-right{
+  font-size: 18px;
+}
+.rxp-interaction-delete-btt, .rxp-interaction-edit-btt{
+  margin-left: 40px;
+  padding: 5px;
+  border-style: solid;
+  border-radius: 29px;
+  border-width: 1px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.rxp-interaction-delete-btt{
+  border-color: #f00;
+  color: #f00;
+}
+.rxp-interaction-edit-btt{
+  border-color: rgb(255, 197, 6);
+  color: rgb(255, 197, 6);
+}
+.rxp-no-interaction-container {
+  text-align: center;
+  font-size: 30px;
+  color: #bfbfbf;
+  margin-top: 30px;
+}
+.rxp-no-interaction-waiting{
+  font-size: 90px;
+    color: #f5f5f5;
+}
+.rxp-add-menu{
+  background: #fbfbfb !important;
+}
+.rxp-add-menu {
+  width: 230px;
+  left: auto !important;
+}
+.rxp-add-menu li{
+  width: 200px;
+  margin-left: -5px;
+  cursor: pointer;
+  margin-top: 19px;
+  padding: 7px 0px;
+  border-radius: 8px;
+}
+.rxp-add-menu li:hover{
+  background-color: #f4f7f6;
+}
+.rxp-add-menu li:first-child{
+  margin-top: 9px;
+}
+.rxp-add-menu li:last-child {
+  margin-bottom: 6px;
+} 
+.rxp-add-menu .wi-day-sunny{
+  font-size: 10px;
+  position: relative;
+  left: 9px;
+  float: left;
+  color: gray;
+  border-style: solid;
+  top: 14px;
+  border-width: 2px;
+  border-color: #fbfbfb;
+  border-radius: 31px;
+  background-color: #fbfbfbc4;
+}
+.tab-pane{
+  height: calc( 100vh - 114px);
+  overflow: scroll;
+}

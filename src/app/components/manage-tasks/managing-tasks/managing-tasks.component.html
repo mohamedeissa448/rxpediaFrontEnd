@@ -1,0 +1,536 @@
+<!-- Tasks Types tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link edit-tab" [ngClass]="{ active: navTab == 'edit' }" (click)="changeNavTab('edit')">
+      <i class="icon-pencil"></i> Edit
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link review-tab" [ngClass]="{ active: navTab == 'review' }" (click)="changeNavTab('review')">
+      <i class="icon-eye"></i> Review
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link grammer-review-tab" [ngClass]="{ active: navTab == 'grammerreview' }" (click)="changeNavTab('grammerreview')">
+      <i class="icon-flag"></i> Grammer Review
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link publish-tab" [ngClass]="{ active: navTab == 'publish' }" (click)="changeNavTab('publish')">
+      <i class="icon-cloud-upload"></i> Publish
+    </a>
+  </li>
+</ul>
+<div class="tab-page-containers tab-content">
+  <div class="tab-pane" id="Edit" [ngClass]="{ active: navTab == 'edit' || !navTab }">
+    <h3 *ngIf="editTasks['Master AI'].length > 0">Master AI</h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of editTasks['Master AI']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          <div class="task">
+            <span class="title">{{ task.Task_Title }}</span>
+            <!-- <span class="timeAgo">{{ task.Task_AssignDate }}</span> -->
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Master TN'].length > 0">Master TN</h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of editTasks['Master TN']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          <div class="task">
+            <span class="title">{{ task.Task_Title }}</span>
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Country Clinical Data'].length > 0">
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of editTasks['Country Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          <div class="task">
+            <span class="title">{{ task.Task_Title }}</span>
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Country Non Clinical Data'].length > 0">
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of editTasks['Country Non Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          <div class="task">
+            <span class="title">{{ task.Task_Title }}</span>
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+  <div class="tab-pane" id="Review" [ngClass]="{ active: navTab == 'review' }">
+    <h3 *ngIf="reviewTasks['Master AI'] && reviewTasks['Master AI'].length > 0">
+      Master AI
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of reviewTasks['Master AI']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          <div class="task">
+            <span class="title">{{ task.Task_Title }}</span>            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="reviewTasks['Master TN'] && reviewTasks['Master TN'].length > 0">
+      Master TN
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of reviewTasks['Master TN']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        reviewTasks['Country Clinical Data'] &&
+        reviewTasks['Country Clinical Data'].length > 0
+      ">
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of reviewTasks['Country Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        reviewTasks['Country Non Clinical Data'] &&
+        reviewTasks['Country Non Clinical Data'].length > 0
+      ">
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of reviewTasks['Country Non Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+
+  <div class="tab-pane" id="GrammerReview" [ngClass]="{ active: navTab == 'grammerreview' }">
+    <h3 *ngIf="
+        grammerReviewTasks['Master AI'] &&
+        grammerReviewTasks['Master AI'].length > 0
+      ">
+      Master AI
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of grammerReviewTasks['Master AI']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        grammerReviewTasks['Master TN'] &&
+        grammerReviewTasks['Master TN'].length > 0
+      ">
+      Master TN
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of grammerReviewTasks['Master TN']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        grammerReviewTasks['Country Clinical Data'] &&
+        grammerReviewTasks['Country Clinical Data'].length > 0
+      ">
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of grammerReviewTasks['Country Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        grammerReviewTasks['Country Non Clinical Data'] &&
+        grammerReviewTasks['Country Non Clinical Data'].length > 0
+      ">
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of grammerReviewTasks['Country Non Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+  <div class="tab-pane" id="publish" [ngClass]="{ active: navTab == 'publish' }">
+    <h3 *ngIf="publishTasks['Master AI'] && publishTasks['Master AI'].length > 0">
+      Master AI
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of publishTasks['Master AI']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="publishTasks['Master TN'] && publishTasks['Master TN'].length > 0">
+      Master TN
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of publishTasks['Master TN']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        publishTasks['Country Clinical Data'] &&
+        publishTasks['Country Clinical Data'].length > 0
+      ">
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of publishTasks['Country Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="
+        publishTasks['Country Non Clinical Data'] &&
+        publishTasks['Country Non Clinical Data'].length > 0
+      ">
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let task of publishTasks['Country Non Clinical Data']">
+        <button mat-button class="rxp-tasks-btt-in-list" (click)="
+            openTaskOwner(
+              task.Task_ActionTypeName,
+              task.Task_RelatedTo,
+              task.Task_ActionDetails_Code,
+              task.Task_Title,
+              task.Task_AssignDate,
+              task.Employee.Employee_Name,
+              task.Task_AssignTo_Employee_Code,
+              task.Task_Code
+            )
+          ">
+          
+          <div class="task">
+            
+            <span class="title">{{ task.Task_Title }}</span>
+            
+          </div>
+          <div class="owner">
+            <span class="owner-title">Task Owner:&nbsp;<span class="owner-name">{{
+                task.Employee.Employee_Name
+              }}</span></span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+</div>

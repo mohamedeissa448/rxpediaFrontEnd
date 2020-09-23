@@ -1,0 +1,29 @@
+.rxp-title{
+    font-weight: bold;
+  }
+  .rxp-comment-container .rxp-comment-text p{
+    margin: 0 !important;
+  }
+  .rxp-comment-container{
+    padding: 12px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 12px;
+    border-color: #abc7c2;
+    margin-bottom: 10px;
+  }
+  .rxp-comment-from-to{
+    min-height: 25px;
+  }
+  .rxp-comment-from{
+    float: left;
+  }
+  .rxp-comment-to{
+    float: right;
+  }
+  .rxp-comment-date{
+    text-align: right;
+  }
+  .rxp-comment-container .rxp-comment-text p{
+    margin: 0 !important;
+  }

@@ -1,0 +1,59 @@
+.accordion-icon {
+  font-family: FontAwesome;
+  color: #ffffff;
+}
+.panel-collapse .accordion-icon {
+  color: rgb(51, 122, 183);
+}
+
+#accordion1 .panel-heaing {
+  /* background: */
+  background-color: red;
+}
+#accordion1 .panel-collapse .list-group-item {
+  background: #f9f9f9;
+}
+#accordion1 .panel-collapse .list-group-item:hover {
+  background: #f0f0f0;
+}
+
+#accordion1 .panel-heading a > .accordion-icon:after {
+  content: "\f068";
+  color: #000;
+}
+#accordion1 .panel-heading a.collapsed > .accordion-icon:after {
+  content: "\f067";
+  color: #ffffff;
+}
+
+#accordion1 .panel-collapse .list-group-item > a > .accordion-icon:after {
+  content: "\f056";
+  color: #000000;
+}
+#accordion1
+  .panel-collapse
+  .list-group-item
+  > a.collapsed
+  > .accordion-icon:after {
+  content: "\f055";
+  color: #000000;
+}
+h4 {
+  background-color: grey;
+  color: antiquewhite;
+}
+.list-unstyled a {
+  text-decoration: underline;
+}
+.list-unstyled a:hover {
+  color: green;
+}
+/******  interactions ****/
+.interactions {
+  background-color: cadetblue;
+  color: aliceblue;
+  display: block;
+}
+.interactions button {
+  float: right;
+}

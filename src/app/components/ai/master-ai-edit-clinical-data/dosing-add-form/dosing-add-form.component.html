@@ -1,0 +1,69 @@
+<button type="button" (click)="close()" class="btn rxp-close-dialog-btt mr-1" title="Close">
+  <span class="sr-only">Close</span>
+  <i class="icon-close"></i>
+</button>
+<h2 mat-dialog-title>Add Dosing</h2>
+<mat-card *ngIf="isLoading" class="rxp-ingrid-loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</mat-card>
+<mat-dialog-content *ngIf="!isLoading">
+  <mat-form-field class="rxp-full-width-container">
+    <mat-label>Usage Age</mat-label>
+    <mat-select [(ngModel)]="DosingData.Dosing_UsageAge_Code" name="Dosing_UsageAge_Code" required>
+      <mat-option *ngFor="let x of usageAges" [value]="x.UsageAge_Code">
+        {{ x.UsageAge_Name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--Start Interaction Rest Of data  -->
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field class="rxp-full-width-container">
+        <mat-label>Population </mat-label>
+        <mat-select [(ngModel)]="DosingData.Dosing_Population_Code" name="Dosing_Population_Code">
+          <mat-option [value]="1">
+          </mat-option>
+          <mat-option *ngFor="let x of population" [value]="x.Population_Code">
+            {{ x.Population_Name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field class="rxp-full-width-container">
+        <mat-label>Medical Condition</mat-label>
+        <input type="text" placeholder="Pick Medical Condition" aria-label="Medical Condition" matInput [formControl]="myControl"
+          [matAutocomplete]="autoMedicalCondition"/>
+        <mat-autocomplete autoActiveFirstOption #autoMedicalCondition="matAutocomplete" [displayWith]="displaymedicalConditionFnction"
+          [(ngModel)]="DosingData.Dosing_MedicalCondition_Code">
+          <mat-option *ngFor="let MedicalConditionItem of filteredOptions | async" [value]="MedicalConditionItem">
+            {{ MedicalConditionItem.MedicalCondition_Name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field class="rxp-full-width-container">
+        <mat-label>Route</mat-label>
+        <mat-select [(ngModel)]="DosingData.Dosing_Route_Code" name="Dosing_Route_Code" required>
+          <mat-option *ngFor="let x of activeRoutes" [value]="x.Route_Code">
+            {{ x.Route_Name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div>
+    <section>
+      <h3>Dosing Discussion</h3>
+      <editor name="Dosing_Discussion" [(ngModel)]="DosingData.Dosing_Discussion" [init]="EditorConfiguration"></editor>
+    </section>
+  </div>
+
+  <div class="rxp-dialog-action-panel">
+    <button class="btn btn-success mr-1" title="Add Dosing" (click)="AddDosing()" >
+      <i class="fa fa-check"></i>&nbsp;<span>Add Dosing</span>
+    </button>
+  </div>
+</mat-dialog-content>

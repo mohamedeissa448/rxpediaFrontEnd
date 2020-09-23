@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="strengthUnitsService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Strength Unit Name*"
+        formControlName="StrengthUnit_Name"
+      />
+      <mat-error>Please enter a Strength Unit Name </mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Description"
+        formControlName="StrengthUnit_Description"
+      />
+      <mat-error>Please enter a description</mat-error>
+    </mat-form-field>
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="StrengthUnit_IsActive"
+    >
+      Strength Unit Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="strengthUnitsService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

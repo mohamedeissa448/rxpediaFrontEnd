@@ -1,0 +1,56 @@
+
+<mat-spinner *ngIf="InProgressDialogIsloading"></mat-spinner>
+<div *ngIf="!InProgressDialogIsloading">
+  <div class="text-center">
+    <span class="task-title">{{ task.Task_Title }}</span
+    ><br />
+    <span class=""> Still in Progress</span>
+  </div>
+
+  <div layout="row" layout-xs="column">
+    <div flex="50" flex-xs="100">
+      <mat-card>
+        <mat-card-title>
+          <span class="md-headline">Pending At:</span>
+        </mat-card-title>
+        <mat-card-content>
+          <p>
+            <span class="task-stage">{{ task.Task_ActionTypeName }} Stage</span><br />
+            <span>Task Date: </span>
+            <span>{{ task.Task_AssignDate | date }} </span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div flex="50" flex-xs="100">
+      <mat-card>
+        <mat-card-title>
+          <span class="md-headline">Task owner:</span>
+        </mat-card-title>
+        <mat-card-content>
+          <div
+            *ngIf="
+            isMyTask;
+              then thenBlock;
+              else elseBlock
+            "
+          ></div>
+          <ng-template #thenBlock>
+            <span>Task is yours</span>
+            <div class="center-text">
+              <button class="md-primary md-raised" (click)="openTask()" aria-label="Open Task">Open Task</button>
+          </div>
+
+          </ng-template>
+          <ng-template #elseBlock
+            ><span>{{ task.Employee.Employee_Name}}</span> 
+            <a class="md-primary md-default rxp-small-btt" aria-label="Send e-Mail to Task Owner" href="mailto:{{task.Employee.Employee_Email}}?subject=Ref: {{task.Task_Title}}">Send e-Mail</a>
+
+            </ng-template
+          >
+        </mat-card-content>
+        <mat-card-content> </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

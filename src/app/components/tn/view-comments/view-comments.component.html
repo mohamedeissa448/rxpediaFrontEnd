@@ -1,0 +1,31 @@
+<mat-toolbar>
+    <div class="mat-toolbar-tools rxp-dialog-tool-bar">
+        <h3 class="nono-centered-container">Comments</h3>
+    </div>
+</mat-toolbar>
+<mat-card class="padded-content-page">
+    <div *ngFor="let commentItem of commentsData" class="rxp-comment-container">
+        <div class="rxp-comment-from-to">
+            <div class="rxp-comment-from">
+                From Employee: {{commentItem.TNRevision_Comments_Employee_Name}}
+            </div>
+            <div class="rxp-comment-to">
+                To: {{commentItem.TNRevision_Comments_ToEmployee_Name }}
+            </div>
+        </div>
+        
+        <div class="rxp-comment-text" [innerHtml]="commentItem.TNRevision_Comments_Message">
+        </div>
+        <div class="rxp-comment-date">
+             <span am-time-ago="commentItem.TNRevision_Comments_Date"></span>   
+        </div>
+    </div>
+</mat-card>
+
+  <div class="rxp-popup-submit-container mt-3">
+    <button (click)="onSubmit()" class="btn btn btn-outline-success mr-1" type="button">
+      <i class="fa fa-mail-reply-all"></i> Return
+    </button>
+  </div>
+
+  

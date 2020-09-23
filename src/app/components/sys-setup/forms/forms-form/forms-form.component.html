@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="formsService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Form Name*" formControlName="Form_Name" />
+      <mat-error>Please enter a Form Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Description"
+        formControlName="Form_Description"
+      />
+      <mat-error>Please enter a form description</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input matInput placeholder="Cd" formControlName="Form_Cd" />
+      <mat-error>Please enter a Form Cd</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>CDDT</mat-label>
+      <input matInput formControlName="Form_Cddt" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input matInput placeholder="CdPrev" formControlName="Form_CdPrev" />
+      <mat-error>Please enter a Form CdPrev</mat-error>
+    </mat-form-field>
+
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="Form_IsActive"
+    >
+      Form Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="formsService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

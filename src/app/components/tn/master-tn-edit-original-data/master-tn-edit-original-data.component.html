@@ -1,0 +1,433 @@
+
+<!-- end buttons -->
+<form [formGroup]="MasterTNService.form" (ngSubmit)="onSubmit()">
+  <!--     start buttons -->
+<div class="rxp-header-tool-box">
+  <ul class="nav navbar-nav rxp-header-tool-box-nav">
+    <!-- Add Btt menu -->
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a (click)="showComments()" class="icon-menu d-none d-sm-block">
+        <span class="material-icons">
+          comment
+          </span> Comments
+      </a>
+    </li>
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a  class="icon-menu d-none d-sm-block" type="submit">
+        <i class="fa fa-send-o"></i>  Submit TN To Reviewer
+      </a>
+    </li> 
+    <li class="rxp-top-action-loading" *ngIf="actionisLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </li>
+    <li class="rxp-top-action-finished" *ngIf="isFinished">
+      <i class="fa fa-flag-checkered"></i> {{ FinsheMessage }}
+    </li>
+  </ul>
+  <!-- Last Item : Btts Separator -->
+  <!-- <span class="rxp-menu-separator">|</span> -->
+</div>
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Trade Name*" formControlName="TN_Name" />
+      <mat-error>Please enter a trade name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <label
+      >Labeled Active Ingredient(s) "if not found, please contact system
+      administrator."</label
+    >
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder="Select Active Ingredients(s)"
+        aria-label="Number"
+        matInput
+        [formControl]="activeIngredientControl"
+        [matAutocomplete]="autoActiveIngredient"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedActiveIngredient()"
+        #autoActiveIngredient="matAutocomplete"
+        [displayWith]="displayFnActiveIngredient"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptionsActiveIngredient | async"
+          [value]="option"
+        >
+          {{ option.AI_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+     <mat-form-field
+      *ngIf="
+        MasterTNService.form.get('TN_ActiveIngredients')['controls'].length > 0
+      "
+    >
+      <mat-chip-list matInput formArrayName="TN_ActiveIngredients">
+        <mat-chip
+          *ngFor="
+            let x of MasterTNService.form.get('TN_ActiveIngredients')['controls']
+          "
+        >
+          <div
+            *ngIf="
+              x.value && x.value.AI_Name != null && x.value.AI_Code != null
+            "
+          >
+            {{ x.value.AI_Name }}&nbsp;&nbsp;{{ x.value.AI_Code }}
+          </div>
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedActiveIngredient(x.value.AI_Code)"
+          >
+            close
+          </span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field> 
+    <!--- start forms-->
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder='Form"'
+        aria-label="Number"
+        matInput
+        [formControl]="formsControl"
+        [matAutocomplete]="autoForm"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedForm()"
+        #autoForm="matAutocomplete"
+        [displayWith]="displayFnForm"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptionsForm | async"
+          [value]="option"
+        >
+          {{ option.Form_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+     <mat-form-field>
+      <mat-chip-list matInput formArrayName="TN_Form_ID">
+        <mat-chip
+          *ngFor="let x of MasterTNService.form.get('TN_Form_ID')['controls']"
+        >
+          <div *ngIf="x.value && x.value.Form_Name && x.value.Form_Code">
+            {{ x.value.Form_Name }}&nbsp;&nbsp;{{ x.value.Form_Code }}
+          </div>
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedForm(x.value.Form_Code)"
+          >
+            close
+          </span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field> 
+    <!--- start Routes-->
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder='Route"'
+        aria-label="Number"
+        matInput
+        [formControl]="routeControl"
+        [matAutocomplete]="autoRoute"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedRoute()"
+        #autoRoute="matAutocomplete"
+        [displayWith]="displayFnRoute"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptionsRoute | async"
+          [value]="option"
+        >
+          {{ option.Route_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+     <mat-form-field>
+      <mat-chip-list matInput formArrayName="TN_Route_ID">
+        <mat-chip
+          *ngFor="let x of MasterTNService.form.get('TN_Route_ID')['controls']"
+        >
+          <div *ngIf="x.value && x.value.Route_Name && x.value.Route_Code">
+            {{ x.value.Route_Name }}&nbsp;&nbsp;{{ x.value.Route_Code }}
+          </div>
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedRoute(x.value.Route_Code)"
+          >
+            close
+          </span>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field> 
+    <!--- Strengths -->
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder=" add strength for each single active ingredient"
+        aria-label="Number"
+        matInput
+        [formControl]="activeIngredientControl"
+        [matAutocomplete]="autoStrength"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedStrength()"
+        #autoStrength="matAutocomplete"
+        [displayWith]="displayFnStrength"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptionsActiveIngredient | async"
+          [value]="option"
+        >
+          {{ option.AI_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+     <mat-chip-list matInput formArrayName="TN_ActualActiveIngredientsObjects">
+      <div
+        *ngFor="
+          let x of MasterTNService.form.get('TN_ActualActiveIngredientsObjects')['controls'];
+          let i = index
+        "
+      >
+        <mat-chip>
+          <div *ngIf="x.value && x.value.AI_Name && x.value.AI_Code">
+            {{ x.value.AI_Name }}&nbsp;&nbsp;{{ x.value.AI_Code }}
+          </div>
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedStrength(x.value.AI_Code)"
+          >
+            close
+          </span>
+        </mat-chip>
+
+        <mat-form-field>
+          <mat-label>Strength value</mat-label>
+          <input
+            type="number"
+            #input
+            matInput
+            (change)="
+              MasterTNService.form.get('TN_Data_Strength').controls[
+                i
+              ].value.TN_Data_Strength_Value = input.value
+            "
+            [(ngModel)]="
+              MasterTNService.form.get('TN_Data_Strength')['controls'][i].value
+                .TN_Data_Strength_Value
+            "
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Strength Unit</mat-label>
+          <mat-select
+            (selectionChange)="
+              MasterTNService.form.get('TN_Data_Strength').controls[
+                i
+              ].value.TN_Data_Strength_Unite_ID = $event.value
+            "
+            [(ngModel)]="
+              MasterTNService.form.get('TN_Data_Strength')['controls'][i].value
+                .TN_Data_Strength_Unite_ID
+            "
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <mat-option
+              *ngFor="let unit of strengthUnits"
+              [value]="unit.StrengthUnit_Code"
+            >
+              {{ unit.StrengthUnit_Name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-chip-list> 
+    <!-- Weights -->
+      <mat-form-field>
+      <mat-label>Weight value</mat-label>
+      <input
+        type="number"
+        #Weightvalue
+        matInput
+        
+        [(ngModel)]="MasterTNService.form.value['TN_Weight_Value']"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </mat-form-field> 
+      <mat-form-field>
+      <mat-label>Weight Unit</mat-label>
+      <mat-select
+        (selectionChange)="
+          MasterTNService.form.get('TN_Weight_Unit_ID').setValue($event.value)
+        "
+        [(ngModel)]="MasterTNService.form.value['TN_Weight_Unit_ID']"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <mat-option
+          *ngFor="let unit of weightUnits"
+          [value]="unit.WeightUnit_Code"
+        >
+          {{ unit.WeightUnit_Name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>  
+    <!-- Volumes -->
+     <mat-form-field>
+      <mat-label>Volume value</mat-label>
+      <input
+        type="number"
+        #Volumevalue
+        matInput
+        (change)="
+          MasterTNService.form.get('TN_Volume_Value').setValue(Volumevalue.value) 
+        "
+        [(ngModel)]="MasterTNService.form.value['TN_Volume_Value']"
+        [ngModelOptions]="{ standalone: true }"
+      /> 
+    </mat-form-field> 
+     <mat-form-field>
+      <mat-label>Volume Unit</mat-label>
+      <mat-select
+        (selectionChange)="
+          MasterTNService.form.get('TN_Volume_Unit_ID').setValue( $event.value)
+        "
+        [(ngModel)]="MasterTNService.form.value['TN_Volume_Unit_ID']"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <mat-option
+          *ngFor="let unit of volumeUnits"
+          [value]="unit.VolumeUnit_Code"
+        >
+          {{ unit.VolumeUnit_Name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>  
+    <!-- Concentrations -->
+      <mat-form-field>
+        <mat-label>Concentration value</mat-label>
+        <input
+          type="number"
+          #Concentrationvalue
+          matInput
+          (change)="
+            MasterTNService.form.get('TN_Concentration_Value').setValue(Concentrationvalue.value)"
+          [(ngModel)]="MasterTNService.form.value['TN_Concentration_Value']"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </mat-form-field> 
+      <mat-form-field>
+        <mat-label>Concentration Unit</mat-label>
+        <mat-select
+          (selectionChange)="
+            MasterTNService.form.get('TN_Concentration_Unit_ID').setValue($event.value)
+              
+          "
+          [(ngModel)]="
+            MasterTNService.form.value['TN_Concentration_Unit_ID']
+          "
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-option
+            *ngFor="let unit of concentrationUnits"
+            [value]="unit.ConcentrationUnit_Code"
+          >
+            {{ unit.ConcentrationUnit_Name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> 
+     
+    <!----  Countries -->
+    <mat-form-field>
+      <input
+        type="text"
+        placeholder="Select Country(s)"
+        aria-label="Number"
+        matInput
+        [formControl]="countryControl"
+        [matAutocomplete]="autoCountry"
+      />
+      <mat-autocomplete
+        (closed)="addSelectedCountry()"
+        #autoCountry="matAutocomplete"
+        [displayWith]="displayFnCountry"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptionsCountry | async"
+          [value]="option"
+        >
+          {{ option.Country_Name }}
+        </mat-option> </mat-autocomplete
+      ><br />
+    </mat-form-field>
+
+    <mat-chip-list matInput formArrayName="TN_Countries">
+       <div *ngFor="let x of MasterTNService.form.get('TN_Countries')['controls']">
+        <mat-chip>
+          <span *ngIf="x.value && x.value.Country_Name && x.value.Country_Code">
+            {{ x.value.Country_Name }}&nbsp;&nbsp;{{
+              x.value.Country_Code
+            }}</span
+          >
+          <span
+            class="material-icons close-icon"
+            (click)="deleteSelectedCountry(x.value.Country_Code)"
+          >
+            close
+          </span>
+        </mat-chip>
+      </div> 
+    </mat-chip-list>
+    <br />
+     <div *ngIf="MasterTNService.form.get('TN_Countries')['controls'].length > 0">
+      <mat-form-field
+        *ngFor="
+          let x of MasterTNService.form.get('TN_Countries')['controls'];
+          let i = index
+        "
+      >
+        <input matInput style="display: none;" />
+        <span>{{ x.value.Country_Name }} Full Name</span>
+        <input
+          matInput
+          [value]="x.value.Country_Name"
+          placeholder="TN Country Full Name"
+          #CountryFullName
+          *ngIf="MasterTNService.form.get('TN_Country_Data')['controls'][i].value"
+          (change)="
+            MasterTNService.form.get('TN_Country_Data')['controls'][
+              i
+            ].value.TN_Data_Country_FullName = CountryFullName.value
+          "
+          [(ngModel)]="
+            MasterTNService.form.get('TN_Country_Data')['controls'][i].value
+              .TN_Data_Country_FullName
+          "
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </mat-form-field>
+    </div> 
+    <br />
+  </mat-dialog-content>
+
+ <!-- 
+   <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="MasterTNService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+  -->
+</form>

@@ -1,0 +1,32 @@
+<button type="button" (click)="closeForm()" tabindex="-1" class="btn rxp-close-dialog-button mr-1" title="Close">
+  <span class="sr-only">Close</span>
+  <i class="icon-close"></i>
+</button>
+<div class="row">
+  <div class="col-sm-2 rxp-left-custom-verticle-tab">
+    <div class="rxp-custom-verticle-tab" (click)="changeNavTab('LiveData')"
+      [ngClass]="{ active: SelectedTab == 'LiveData' || !SelectedTab }">
+      <span class="rxp-custom-tab-txt live-tab">Live Data</span>
+    </div>
+    <div class="rxp-custom-verticle-tab rxp-custom-verticle-tab-revision-tab" (click)="changeNavTab('RevisionData')"
+      [ngClass]="{ active: SelectedTab == 'RevisionData' || !SelectedTab }">
+      <span class="rxp-custom-tab-txt revision-tab">revision Data</span>
+    </div>
+    <div class="rxp-custom-verticle-tab" (click)="changeNavTab('Task')"
+      [ngClass]="{ active: SelectedTab == 'Task' || !SelectedTab }">
+      <span class="rxp-custom-tab-txt task-tab">Task</span>
+    </div>
+  </div>
+  <div *ngIf="SelectedTab=='LiveData'" class="col-sm-10 rxp-custom-left-container-verticle-tab">
+    
+    <app-view-master-ai-clinical-data AIToView="{{aicode}}"></app-view-master-ai-clinical-data>
+  </div>
+  <div *ngIf="SelectedTab=='RevisionData'" class="col-sm-10 rxp-custom-left-container-verticle-tab">
+    <app-revision-data AIToView="{{aicode}}"></app-revision-data>
+
+  </div>
+  <div *ngIf="SelectedTab=='Task'" class="col-sm-10 rxp-custom-left-container-verticle-tab">
+    
+    <app-progress AIToView="{{aicode}}"></app-progress>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.close-icon:hover {
+  cursor: pointer;
+  color: red;
+}
+mat-form-field {
+  display: block;
+  width: 100%;
+}

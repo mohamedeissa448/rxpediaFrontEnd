@@ -1,0 +1,13 @@
+/********* close button for model*********/
+.btn-dialog-close {
+    margin-left: auto;
+  }
+.btn-dialog-close:hover {
+    color: red;
+}
+.submit{
+  display: block;
+  margin: auto;
+  color:blue;
+  font-size: x-large;
+}

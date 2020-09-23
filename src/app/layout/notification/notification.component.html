@@ -1,0 +1,23 @@
+<li *ngFor="let task of Top10Notifications">
+  <a href="javascript:void(0);">
+    <div class="media">
+      <div class="media-left">
+        <i *ngIf="task.Task_ActionTypeName =='Edit'" class="icon-pencil text-warning"></i>
+        <i *ngIf="task.Task_ActionTypeName =='Review'" class="icon-eye text-success"></i>
+        <i *ngIf="task.Task_ActionTypeName =='Grammer Review'" class="icon-flag text-info"></i>
+        <i *ngIf="task.Task_ActionTypeName =='Publish'" class="icon-cloud-upload text-danger"></i>
+      </div>
+      <div class="media-body">
+        <p class="text">
+          <strong>{{task.Task_RelatedTo}} </strong>{{task.Task_Title}}
+        </p>
+        <span class="task-timeAgo">{{ moment(task.Task_AssignDate).startOf('hour').fromNow() }} </span>
+      </div>
+    </div>
+  </a>
+</li>
+<li *ngIf="NumOfAllTasks>10" class="footer">
+  <a href="javascript:void(0);" class="more" routerLink="/my-tasks">
+    See all notifications ({{NumOfAllTasks}})
+  </a>
+</li>

@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <h2 mat-dialog-title>{{ title }}</h2>
+  <span class="fill-remainig-space"></span>
+  <!-- <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabindex="-1">
+    <mat-icon>clear</mat-icon>
+  </button> -->
+</mat-toolbar>
+<div class="form-group">
+  <label for="exampleFormControlTextarea1" >Add Your Comments:</label>
+  <textarea 
+  [(ngModel)]="Message"
+  class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+</div>
+<div class="rxp-popup-submit-container">
+  <button (click)="onSubmit()" class="btn btn btn-outline-success mr-1" type="button">
+    <i class="fa fa-mail-reply-all"></i> Return
+  </button>
+</div>

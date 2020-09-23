@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="RoutesService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="Route Name*" formControlName="Route_Name" />
+      <mat-error>Please enter a Route Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Route Description"
+        formControlName="Route_Description"
+      />
+      <mat-error>Please enter a Route description</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input matInput placeholder="Route_Cd" formControlName="Route_Cd" />
+      <mat-error>Please enter Cd</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>CDDT</mat-label>
+      <input matInput formControlName="Route_Cddt" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Route CdPrev"
+        formControlName="Route_CdPrev"
+      />
+      <mat-error>Please enter CdPrev</mat-error>
+    </mat-form-field>
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="Route_IsActive"
+    >
+      Route Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="RoutesService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

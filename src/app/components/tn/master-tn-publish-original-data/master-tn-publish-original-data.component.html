@@ -1,0 +1,154 @@
+<!--     start buttons -->
+<div class="rxp-header-tool-box">
+  <ul class="nav navbar-nav rxp-header-tool-box-nav">
+    <!-- Add Btt menu -->
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a (click)="ReturnToEditor()" class="icon-menu d-none d-sm-block">
+        <i class="fa fa-mail-reply-all"></i> Return To Editor
+      </a>
+    </li>
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a (click)="Publish()" class="icon-menu d-none d-sm-block">
+        <i class="fa fa-send-o"></i>  Publish Data
+      </a>
+    </li> 
+    <li class="rxp-top-action-loading" *ngIf="actionisLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </li>
+    <li class="rxp-top-action-finished" *ngIf="isFinished">
+      <i class="fa fa-flag-checkered"></i> {{ FinsheMessage }}
+    </li>
+  </ul>
+  <!-- Last Item : Btts Separator -->
+  <!-- <span class="rxp-menu-separator">|</span> -->
+</div>
+<!-- end buttons -->
+<mat-toolbar class="custom-toolbar">  
+    <div class="header" >
+        <span class="rxp-secondary-lable">TN Code: {{ tnToReview.TNRevision_TN_Code}}</span>
+    </div> 
+  </mat-toolbar>
+  
+  <div class="rxp-tn-details">
+      <p>
+        <span class="rxp-tn-details-title">Trade Name:</span>
+        <span class="rxp-tn-details-value">
+          {{tnToReview.TNRevision_Name}}</span
+        >
+      </p>
+      <p>
+        <span class="rxp-tn-details-title">Active Ingredient(s):</span>
+        <span class="rxp-tn-details-value">
+          <mat-chip-list>
+              <mat-chip *ngFor="let ai of tnToReview.aiRevision">{{ai.AI_Name}}</mat-chip>
+          </mat-chip-list>
+      </span>
+      </p>
+      <p>
+          <span class="rxp-tn-details-title">Form:</span>
+          <span class="rxp-tn-details-value">
+            {{tnToReview.form.Form_Name}}</span>
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Routes:</span>
+          <span class="rxp-tn-details-value">
+            {{tnToReview.route.Route_Name}}</span
+          >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Strength(s):</span>
+          <span class="rxp-tn-details-value">
+            <mat-chip-list>
+                <mat-chip *ngFor="let StrengthItem of tnToReview.FullStrengthData">
+                  <label class="mat-title rxp-inline-chips">{{StrengthItem.AIName}}: </label>
+                  <span class="mat-title">{{StrengthItem.StrengthValue}} {{StrengthItem.StrengthUnitName}}</span>  
+                </mat-chip>
+            </mat-chip-list></span
+          >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Weight Value:</span>
+          <span *ngIf="tnToReview.weight" class="rxp-tn-details-value">
+            {{tnToReview.weight.TN_Weight_Value}}</span
+          >
+          <span *ngIf="!tnToReview.weight" class="rxp-tn-details-value">
+             No Data!
+          </span>
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Weight Unit:</span>
+          <span *ngIf="tnToReview.weight"class="rxp-tn-details-value">
+            {{tnToReview.weight.WeightUnit_Name}}</span
+          >
+          <span *ngIf="!tnToReview.weight"class="rxp-tn-details-value">
+              No Data!</span
+            >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Volume Value:</span>
+          <span *ngIf="tnToReview.volume" class="rxp-tn-details-value">
+            {{tnToReview.volume.TN_Volume_Value}}</span
+          >
+          <span *ngIf="!tnToReview.volume" class="rxp-tn-details-value">
+              No Data!</span
+            >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Volume Unit:</span>
+          <span *ngIf="tnToReview.volume"class="rxp-tn-details-value">
+            {{tnToReview.volume.VolumeUnit_Name}}</span
+          >
+          <span *ngIf="!tnToReview.volume" class="rxp-tn-details-value">
+              No Data!</span
+            >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Concentration Value:</span>
+          <span *ngIf="tnToReview.concentration"class="rxp-tn-details-value">
+            {{tnToReview.concentration.TN_Concentration_Value}}</span
+          >
+          <span *ngIf="!tnToReview.concentration" class="rxp-tn-details-value">
+              No Data!</span
+            >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Concentration Unit:</span>
+          <span *ngIf="tnToReview.volume"class="rxp-tn-details-value">
+            {{tnToReview.concentration.ConcentrationUnit_Name}}</span
+          >
+          <span *ngIf="!tnToReview.concentration" class="rxp-tn-details-value">
+              No Data!</span
+            >
+        </p>
+        <p>
+          <span class="rxp-tn-details-title">Country(s)::</span>
+          <span class="rxp-tn-details-value">
+            <mat-chip-list>
+                <mat-chip *ngFor="let CountryItem of tnToReview.FullCountryData">
+                  <label class="mat-title rxp-inline-chips">{{CountryItem.CountryName}}: </label>
+                  <span class="mat-title">TN Full Name: {{CountryItem.CountryTNFullName}}</span>  
+                </mat-chip>
+            </mat-chip-list></span>
+        </p>
+      </div>
+  
+   <!--  
+    <div class="rxp-dialog-action-panel">
+      <button
+        type="button"
+        class="btn btn-danger mr-1"
+        title="Back To Editor"
+        (click)="ReturnToEditor()"
+      >
+        <i class="fa fa-check"></i>&nbsp;<span>Back To Editor</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-success mr-1"
+        title="Back To Editor"
+        (click)="Publish()"
+      >
+        <i class="fa fa-check"></i>&nbsp;<span>Publish</span>
+      </button>
+    </div>
+    --> 

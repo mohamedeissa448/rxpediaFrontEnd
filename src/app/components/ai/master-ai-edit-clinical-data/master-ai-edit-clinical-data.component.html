@@ -1,0 +1,1632 @@
+<div class="rxp-header-tool-box" *ngIf="!isBrokenTask">
+  <ul class="nav navbar-nav rxp-header-tool-box-nav">
+    <!-- Save Btt menu -->
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a (click)="SubmitToReview()" class="icon-menu d-none d-sm-block">
+        <i class="fa fa-send-o"></i> Submit To Review
+      </a>
+    </li>
+    <li *ngIf="!actionisLoading && !isFinished">
+      <a disabled="saveclicked" (click)="submitData(); saveclicked = true;" class="icon-menu d-none d-sm-block">
+        <i class="fa fa-floppy-o"></i> Save
+      </a>
+    </li>
+    <li class="rxp-top-action-loading" *ngIf="actionisLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </li>
+    <li class="rxp-top-action-finished" *ngIf="isFinished">
+      <i class="fa fa-flag-checkered"></i> Submited to Reviewer
+    </li>
+  </ul>
+</div>
+<!-- Loading Container -->
+<div class="rxp-loading-container" *ngIf="actionisLoading || isFinished" >
+  <div class="rxp-inpage-action-loading" *ngIf="actionisLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div class="rxp-inpage-action-finished" *ngIf="isFinished">
+    <p>
+      <span class="rxp-inpage-action-finished-icon"><i class="fa fa-flag-checkered"></i></span>
+      <span class="rxp-inpage-action-finished-title">Submited to Reviewer</span>
+    </p>
+    <img src="../../../../assets/images/image-gallery/finish-the-task.png" >
+  </div>
+</div>
+<div class="rxp-loading-container rxp-error-container" *ngIf="isBrokenTask">
+  <img src="../../../../assets/images/image-gallery/task-error.png" >
+</div>
+<!-- Clinical Data tabs -->
+<ul class="nav nav-tabs" *ngIf="!actionisLoading && !isFinished && !isBrokenTask">
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: navTab == 'administration' }" (click)="changeNavTab('administration')">
+      <i class="icon-tag"></i> Administration
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: navTab == 'general' }" (click)="changeNavTab('general')">
+      <i class="icon-chemistry"></i> General
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: navTab == 'interaction' }" (click)="changeNavTab('interaction')">
+      <i class="icon-shuffle"></i> Interaction
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: navTab == 'dosing' }" (click)="changeNavTab('dosing')">
+      <i class="icon-drop"></i> Dosing
+    </a>
+  </li>
+  <li class="nav-item" *ngIf="ClinicalData.AIMasterRevision_Comments">
+    <a class="nav-link" [ngClass]="{ active: navTab == 'comments' }" (click)="changeNavTab('comments')">
+      <i class="icon-bubbles"></i> comments
+    </a>
+  </li>
+
+</ul>
+<div class="tab-page-containers tab-content" *ngIf="!actionisLoading && !isFinished && !isBrokenTask">
+  <!-- Administration Page-->
+  <div class="tab-pane" id="administration" [ngClass]="{ active: navTab == 'administration' || !navTab }">
+    <div class="row">
+      <div class="col-sm-2">
+        <ul class="choose-skin list-unstyled task-subgroup-list rxp-left-sticky-menu">
+          <li appItemSelectChanger class="taskl-list-item" *ngFor="let item of AdministrationMenueItems?.nodes"
+            (click)="changeSelectedAdminItem(item.id)">
+            <div class="task-list">
+              <span class="task-title">{{ item.title }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-10 rxp-left-sticky-menu">
+        <section *ngIf="SelectedAdminItem == 'Administration'">
+          <h3>Administration</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration" name="AIMasterRevision_Administration"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Rectal'">
+          <h3>Rectal</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Rectal"
+            name="AIMasterRevision_Administration_Rectal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Oral'">
+          <h3>Oral</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Oral"
+            name="AIMasterRevision_Administration_Oral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intravenous'">
+          <h3>Intravenous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravenous
+            " name="AIMasterRevision_Administration_Intravenous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Auricular'">
+          <!--not sure-->
+          <h3>Auricular</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Auricular"
+            name="AIMasterRevision_Administration_Auricular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Buccal'">
+          <h3>Buccal</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Buccal"
+            name="AIMasterRevision_Administration_Buccal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Conjunctival'">
+          <h3>Conjunctival</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Conjunctival
+            " name="AIMasterRevision_Administration_Conjunctival" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Cutaneous'">
+          <h3>Cutaneous</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Cutaneous"
+            name="AIMasterRevision_Administration_Cutaneous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Dental'">
+          <h3>Dental</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Dental"
+            name="AIMasterRevision_Administration_Dental" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'ElectroOsmosis'">
+          <h3>ElectroOsmosis</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Electro_Osmosis
+            " name="AIMasterRevision_Administration_Electro_Osmosis" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Endocervical'">
+          <h3>Endocervical</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Endocervical
+            " name="AIMasterRevision_Administration_Endocervical" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Endosinusial'">
+          <h3>Endosinusial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Endosinusial
+            " name="AIMasterRevision_Administration_Endosinusial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Endotracheal'">
+          <h3>Endotracheal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Endotracheal
+            " name="AIMasterRevision_Administration_Endotracheal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Enteral'">
+          <h3>Enteral</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Enteral"
+            name="AIMasterRevision_Administration_Enteral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Epidural'">
+          <h3>Epidural</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Epidural"
+            name="AIMasterRevision_Administration_Epidural" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'ExtraAmniotic'">
+          <h3>ExtraAmniotic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Extra_Amniotic
+            " name="AIMasterRevision_Administration_Extra_Amniotic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Extracorporeal'">
+          <h3>Extracorporeal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Extracorporeal
+            " name="AIMasterRevision_Administration_Extracorporeal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Hemodialysis'">
+          <h3>Hemodialysis</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Hemodialysis
+            " name="AIMasterRevision_Administration_Hemodialysis" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Infiltration'">
+          <h3>Infiltration</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Infiltration
+            " name="AIMasterRevision_Administration_Infiltration" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Interstitial'">
+          <h3>Interstitial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Interstitial
+            " name="AIMasterRevision_Administration_Interstitial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntraAbdominal'">
+          <h3>Intra Abdominal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intra_Abdominal
+            " name="AIMasterRevision_Administration_Intra_Abdominal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntraAmniotic'">
+          <h3>Intra Amniotic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intra_Amniotic
+            " name="AIMasterRevision_Administration_Intra_Amniotic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntraArterial'">
+          <h3>Intra Arterial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intra_Arterial
+            " name="AIMasterRevision_Administration_Intra_Arterial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntraArticular'">
+          <h3>Intra Articular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intra_Articular
+            " name="AIMasterRevision_Administration_Intra_Articular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrabiliary'">
+          <h3>Intrabiliary</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrabiliary
+            " name="AIMasterRevision_Administration_Intrabiliary" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrabronchial'">
+          <h3>Intrabronchial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrabronchial
+            " name="AIMasterRevision_Administration_Intrabronchial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrabursal'">
+          <h3>Intrabursal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrabursal
+            " name="AIMasterRevision_Administration_Intrabursal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracardiac'">
+          <h3>Intracardiac</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracardiac
+            " name="AIMasterRevision_Administration_Intracardiac" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracartilaginous'">
+          <h3>Intracartilaginous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracartilaginous
+            " name="AIMasterRevision_Administration_Intracartilaginous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracaudal'">
+          <h3>Intracaudal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracaudal
+            " name="AIMasterRevision_Administration_Intracaudal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracavernous'">
+          <h3>Intracavernous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracavernous
+            " name="AIMasterRevision_Administration_Intracavernous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracavitary'">
+          <h3>Intracavitary</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracavitary
+            " name="AIMasterRevision_Administration_Intracavitary" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracerebral'">
+          <h3>Intracerebral</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracerebral
+            " name="AIMasterRevision_Administration_Intracerebral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracisternal'">
+          <h3>Intracisternal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracisternal
+            " name="AIMasterRevision_Administration_Intracisternal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracorneal'">
+          <h3>Intracorneal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracorneal
+            " name="AIMasterRevision_Administration_Intracorneal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntracoronalDental'">
+          <h3>Intracoronal Dental</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracoronal_Dental
+            " name="AIMasterRevision_Administration_Intracoronal_Dental" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intracoronary'">
+          <h3>Intracoronary</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracoronary
+            " name="AIMasterRevision_Administration_Intracoronary" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntracorporusCavernosum'">
+          <h3>Intracorporus Cavernosum</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intracorporus_Cavernosum
+            " name="AIMasterRevision_Administration_Intracorporus_Cavernosum" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intradermal'">
+          <h3>Intradermal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intradermal
+            " name="AIMasterRevision_Administration_Intradermal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intradiscal'">
+          <h3>Intradiscal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intradiscal
+            " name="AIMasterRevision_Administration_Intradiscal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraductal'">
+          <h3>Intraductal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraductal
+            " name="AIMasterRevision_Administration_Intraductal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraduodenal'">
+          <h3>Intraduodenal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraduodenal
+            " name="AIMasterRevision_Administration_Intraduodenal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intradural'">
+          <h3>Intradural</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intradural
+            " name="AIMasterRevision_Administration_Intradural" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraepidermal'">
+          <h3>Intraepidermal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraepidermal
+            " name="AIMasterRevision_Administration_Intraepidermal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraesophageal'">
+          <h3>Intraesophageal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraesophageal
+            " name="AIMasterRevision_Administration_Intraesophageal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intragastric'">
+          <h3>Intragastric</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intragastric
+            " name="AIMasterRevision_Administration_Intragastric" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intragingival'">
+          <h3>Intragingival</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intragingival
+            " name="AIMasterRevision_Administration_Intragingival" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraileal'">
+          <h3>Intraileal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraileal
+            " name="AIMasterRevision_Administration_Intraileal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intralesional'">
+          <h3>Intralesional</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intralesional
+            " name="AIMasterRevision_Administration_Intralesional" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraluminal'">
+          <h3>Intraluminal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraluminal
+            " name="AIMasterRevision_Administration_Intraluminal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intralymphatic'">
+          <h3>Intralymphatic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intralymphatic
+            " name="AIMasterRevision_Administration_Intralymphatic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intramedullary'">
+          <h3>Intramedullary</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intramedullary
+            " name="AIMasterRevision_Administration_Intramedullary" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrameningeal'">
+          <h3>Intrameningeal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrameningeal
+            " name="AIMasterRevision_Administration_Intrameningeal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intramuscular'">
+          <h3>Intramuscular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intramuscular
+            " name="AIMasterRevision_Administration_Intramuscular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraocular'">
+          <h3>Intraocular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraocular
+            " name="AIMasterRevision_Administration_Intraocular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraovarian'">
+          <h3>Intraovarian</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraovarian
+            " name="AIMasterRevision_Administration_Intraovarian" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrapericardial'">
+          <h3>Intrapericardial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrapericardial
+            " name="AIMasterRevision_Administration_Intrapericardial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraperitoneal'">
+          <h3>Intraperitoneal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraperitoneal
+            " name="AIMasterRevision_Administration_Intraperitoneal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrapleural'">
+          <h3>Intrapleural</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrapleural
+            " name="AIMasterRevision_Administration_Intrapleural" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraprostatic'">
+          <h3>Intraprostatic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraprostatic
+            " name="AIMasterRevision_Administration_Intraprostatic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrapulmonary'">
+          <h3>Intrapulmonary</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrapulmonary
+            " name="AIMasterRevision_Administration_Intrapulmonary" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrasinal'">
+          <h3>Intrasinal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrasinal
+            " name="AIMasterRevision_Administration_Intrasinal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraspinal'">
+          <h3>Intraspinal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraspinal
+            " name="AIMasterRevision_Administration_Intraspinal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrasynovial'">
+          <h3>Intrasynovial</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrasynovial
+            " name="AIMasterRevision_Administration_Intrasynovial" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intratendinous'">
+          <h3>Intratendinous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intratendinous
+            " name="AIMasterRevision_Administration_Intratendinous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intratesticular'">
+          <h3>Intratesticular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intratesticular
+            " name="AIMasterRevision_Administration_Intratesticular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrathecal'">
+          <h3>Intrathecal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrathecal
+            " name="AIMasterRevision_Administration_Intrathecal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrathoracic'">
+          <h3>Intrathoracic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrathoracic
+            " name="AIMasterRevision_Administration_Intrathoracic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intratubular'">
+          <h3>Intratubular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intratubular
+            " name="AIMasterRevision_Administration_Intratubular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intratumor'">
+          <h3>Intratumor</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intratumor
+            " name="AIMasterRevision_Administration_Intratumor" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intratympanic'">
+          <h3>Intratympanic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intratympanic
+            " name="AIMasterRevision_Administration_Intratympanic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intrauterine'">
+          <h3>Intrauterine</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intrauterine
+            " name="AIMasterRevision_Administration_Intrauterine" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intravascular'">
+          <h3>Intravascular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravascular
+            " name="AIMasterRevision_Administration_Intravascular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntravenousBolus'">
+          <h3>Intravenous Bolus</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravenous_Bolus
+            " name="AIMasterRevision_Administration_Intravenous_Bolus" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'IntravenousDrip'">
+          <h3>Intravenous Drip</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravenous_Drip
+            " name="AIMasterRevision_Administration_Intravenous_Drip" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intraventricular'">
+          <h3>Intraventricular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intraventricular
+            " name="AIMasterRevision_Administration_Intraventricular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intravesical'">
+          <h3>Intravesical</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravesical
+            " name="AIMasterRevision_Administration_Intravesical" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Intravitreal'">
+          <h3>Intravitreal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Intravitreal
+            " name="AIMasterRevision_Administration_Intravitreal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Iontophoresis'">
+          <h3>Iontophoresis</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Iontophoresis
+            " name="AIMasterRevision_Administration_Iontophoresis" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Irrigation'">
+          <h3>Irrigation</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Irrigation
+            " name="AIMasterRevision_Administration_Irrigation" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Laryngeal'">
+          <h3>Laryngeal</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Laryngeal"
+            name="AIMasterRevision_Administration_Laryngeal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Nasal'">
+          <h3>Nasal</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Nasal"
+            name="AIMasterRevision_Administration_Nasal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Nasogastric'">
+          <h3>Nasogastric</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Nasogastric
+            " name="AIMasterRevision_Administration_Nasogastric" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'NotApplicable'">
+          <h3>Not Applicable</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Not_Applicable
+            " name="AIMasterRevision_Administration_Not_Applicable" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'OcclusiveDressingTechnique'">
+          <h3>Occlusive Dressing Technique</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Occlusive_Dressing_Technique
+            " name="AIMasterRevision_Administration_Occlusive_Dressing_Technique" [init]="EditorConfiguration">
+          </editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Ophthalmic'">
+          <h3>Ophthalmic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Ophthalmic
+            " name="AIMasterRevision_Administration_Ophthalmic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Oropharyngeal'">
+          <h3>Oropharyngeal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Oropharyngeal
+            " name="AIMasterRevision_Administration_Oropharyngeal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Other'">
+          <h3>Other</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Other"
+            name="AIMasterRevision_Administration_Other" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Parenteral'">
+          <h3>Parenteral</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Parenteral
+            " name="AIMasterRevision_Administration_Parenteral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Percutaneous'">
+          <h3>Percutaneous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Percutaneous
+            " name="AIMasterRevision_Administration_Percutaneous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Periarticular'">
+          <h3>Periarticular</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Periarticular
+            " name="AIMasterRevision_Administration_Periarticular" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Peridural'">
+          <h3>Peridural</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Peridural"
+            name="AIMasterRevision_Administration_Peridural" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Perineural'">
+          <h3>Perineural</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Perineural
+            " name="AIMasterRevision_Administration_Perineural" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Periodontal'">
+          <h3>Periodontal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Periodontal
+            " name="AIMasterRevision_Administration_Periodontal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Respiratory'">
+          <h3>Respiratory</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Respiratory
+            " name="AIMasterRevision_Administration_Respiratory" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Retrobulbar'">
+          <h3>Retrobulbar</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Retrobulbar
+            " name="AIMasterRevision_Administration_Retrobulbar" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'SoftTissue'">
+          <h3>Soft Tissue</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Soft_Tissue
+            " name="AIMasterRevision_Administration_Soft_Tissue" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Subarachnoid'">
+          <h3>Subarachnoid</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Subarachnoid
+            " name="AIMasterRevision_Administration_Subarachnoid" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Subconjunctival'">
+          <h3>Subconjunctival</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Subconjunctival
+            " name="AIMasterRevision_Administration_Subconjunctival" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Subcutaneous'">
+          <h3>Subcutaneous</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Subcutaneous
+            " name="AIMasterRevision_Administration_Subcutaneous" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Sublingual'">
+          <h3>Sublingual</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Sublingual
+            " name="AIMasterRevision_Administration_Sublingual" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Submucosal'">
+          <h3>Submucosal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Submucosal
+            " name="AIMasterRevision_Administration_Submucosal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Topical'">
+          <h3>Topical</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Topical"
+            name="AIMasterRevision_Administration_Topical" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Transdermal'">
+          <h3>Transdermal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Transdermal
+            " name="AIMasterRevision_Administration_Transdermal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Transmucosal'">
+          <h3>Transmucosal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Transmucosal
+            " name="AIMasterRevision_Administration_Transmucosal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Transplacental'">
+          <h3>Transplacental</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Transplacental
+            " name="AIMasterRevision_Administration_Transplacental" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Transtracheal'">
+          <h3>Transtracheal</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Transtracheal
+            " name="AIMasterRevision_Administration_Transtracheal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Transtympanic'">
+          <h3>Transtympanic</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Transtympanic
+            " name="AIMasterRevision_Administration_Transtympanic" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Unassigned'">
+          <h3>Unassigned</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Administration_Unassigned
+            " name="AIMasterRevision_Administration_Unassigned" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Unknown'">
+          <h3>Unknown</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Unknown"
+            name="AIMasterRevision_Administration_Unknown" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Ureteral'">
+          <h3>Ureteral</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Ureteral"
+            name="AIMasterRevision_Administration_Ureteral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Urethral'">
+          <h3>Urethral</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Urethral"
+            name="AIMasterRevision_Administration_Urethral" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'Vaginal'">
+          <h3>Vaginal</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Administration_Vaginal"
+            name="AIMasterRevision_Administration_Vaginal" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedAdminItem == 'PreparationForAdministration'">
+          <h3>Preparation For Administration</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_PreparationForAdministration
+            " name="AIMasterRevision_PreparationForAdministration" [init]="EditorConfiguration"></editor>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  <!-- End administration Page-->
+
+  <!-- General Page-->
+  <div class="tab-pane" id="general" [ngClass]="{ active: navTab == 'general' || !navTab }">
+    <div class="row">
+      <div class="col-sm-2">
+        <ul class="choose-skin list-unstyled task-subgroup-list rxp-left-sticky-menu">
+          <nav id="left-sidebar-nav" class="sidebar-nav">
+            <ul id="main-menu" class="metismenu">
+              <li *ngFor="let generalItem of GeneralMenueItems" (click)="
+                  generalItem.nodes
+                    ? generalParentItemChanged(generalItem.id)
+                    : generalPrimaryItemChanged(generalItem.id)
+                " [ngClass]="
+                  generalItem.nodes ? 'rxp-parent-list-item' : 'taskl-list-item'
+                " [attr.id]="
+                  generalItem.nodes
+                    ? 'parent' + generalItem.id
+                    : 'primary' + generalItem.id
+                ">
+                <span [ngClass]="
+                    generalItem.nodes ? 'has-arrow task-title' : 'task-title'
+                  ">{{ generalItem.title }}</span>
+                <ul class="sub-task-list-group" *ngIf="
+                    generalItem.nodes &&
+                    SelectedGeneralParentItem == generalItem.id
+                  ">
+                  <li class="taskl-list-item" *ngFor="let subItem of generalItem.nodes" (click)="
+                      generalChildItemChanged(subItem.id);
+                      $event.stopPropagation()
+                    " [attr.id]="'child' + subItem.id">
+                    <span class="task-title">{{ subItem.title }}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </ul>
+      </div>
+      <div class="col-sm-10 rxp-left-sticky-menu">
+        <section *ngIf="SelectedGeneralItem == 'GeneralAlert'">
+          <h3>General Alert</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_General_Alerts" name="AIMasterRevision_General_Alerts"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'BlackBoxWarning'">
+          <h3>Black Box Warning</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_BlackBoxWarning" name="AIMasterRevision_BlackBoxWarning"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Feeds_Alerts'">
+          <h3>Feeds</h3>
+          <mat-form-field appearance="fill" class="rxp-full-width-container">
+            <mat-label>FDA Feeds URL</mat-label>
+            <input name="AIMasterRevision_FDAFeed_Alerts" matInput
+              [(ngModel)]="ClinicalData.AIMasterRevision_FDAFeed_Alerts">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="rxp-full-width-container">
+            <mat-label>EU Feeds URL</mat-label>
+            <input name="AIMasterRevision_EUFeed_Alerts" matInput
+              [(ngModel)]="ClinicalData.AIMasterRevision_EUFeed_Alerts">
+          </mat-form-field>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'ComparativeEfficacy'">
+          <h3>Comparative Efficacy</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Comparative_Efficacy"
+            name="AIMasterRevision_Comparative_Efficacy" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'DietaryConsiderations'">
+          <h3>Dietary Considerations</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Dietary_Considerations"
+            name="AIMasterRevision_Dietary_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'PregnancyConsiderations'">
+          <h3>Pregnancy Considerations</h3>
+          <mat-form-field appearance="fill" class="rxp-full-width-container">
+            <mat-label>Pregnancy Category</mat-label>
+            <mat-select name="AIMasterRevision_Pregnancy_Category_Code"
+              [(value)]="ClinicalData.AIMasterRevision_Pregnancy_Category_Code">
+              <mat-option *ngFor="let Pregnancy of PregnancyCategories" [value]="Pregnancy.Pregnancy_Code">
+                {{Pregnancy.Pregnancy_Name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Pregnancy_Considerations"
+            name="AIMasterRevision_Pregnancy_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'BreastFeedingConsiderations'">
+          <h3>Breast Feeding Considerations</h3>
+          <mat-form-field appearance="fill" class="rxp-full-width-container">
+            <mat-label>Breast Feeding Category</mat-label>
+            <mat-select name="AIMasterRevision_Breast_Feeding_Category_Code"
+              [(value)]="ClinicalData.AIMasterRevision_Breast_Feeding_Category_Code">
+              <mat-option *ngFor="let BreastFeeding of BreastFeedingCategories"
+                [value]="BreastFeeding.BreastFeeding_Code">
+                {{BreastFeeding.BreastFeeding_Name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Breast_Feeding_Considerations
+            " name="AIMasterRevision_Breast_Feeding_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'FirstTrimesterConsidrations'">
+          <h3>First Trimester Considerations</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_First_Trimester_Considerations
+            " name="AIMasterRevision_First_Trimester_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'SecondTrimesterConsidrations'">
+          <h3>Second Trimester Considerations</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Second_Trimester_Considerations
+            " name="AIMasterRevision_Second_Trimester_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'ThirdTrimesterConsidrations'">
+          <h3>Third Trimester Considerations</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Third_Trimester_Considerations
+            " name="AIMasterRevision_Third_Trimester_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'AdverseReactions'">
+          <h3>Adverse Reactions</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Adverse_Reactions"
+            name="AIMasterRevision_Adverse_Reactions" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'AllergyAndIdiosyncraticReactions'">
+          <h3>Allergy & Idiosyncratic Reactions</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Allergy_Idiosyncratic_Reactions
+            " name="AIMasterRevision_Allergy_Idiosyncratic_Reactions" [init]="EditorConfiguration"></editor>
+        </section>
+        <!--Toxicology ,has no nodes-->
+        <section *ngIf="SelectedGeneralItem == 'Toxicology'">
+          <h3>Toxicology</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Toxicology" name="AIMasterRevision_Toxicology"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'ClinicalPracticeGuidelines'">
+          <h3>AI Clinical Practice Guidelines</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Clinical_Practice_Guidelines
+            " name="AIMasterRevision_Clinical_Practice_Guidelines" [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'IVCompatibility'">
+          <h3>IV Compatibility</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_IV_Compatibility" name="AIMasterRevision_IV_Compatibility"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <!--not sure-->
+        <section *ngIf="SelectedGeneralItem == 'Co'">
+          <h3>Country Based Alert</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Alert" name="AIMasterRevision_Alert"
+            [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'MedicationSafetyIssues'">
+          <h3>Medication Safety Issues</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Medication_Safety_Issues"
+            name="AIMasterRevision_Medication_Safety_Issues" [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'MonitoringParameters'">
+          <h3>Monitoring Parameters</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Monitoring_Parameters"
+            name="AIMasterRevision_Monitoring_Parameters" [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'NursingConsiderations'">
+          <h3>Nursing Considerations</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Nursing_Considerations"
+            name="AIMasterRevision_Nursing_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="
+            SelectedGeneralItem ==
+            'AdvancedPractitionersPhysicalAssessmentMonitoring'
+          ">
+          <h3>Advanced Practitioners Physical Assessment Monitoring</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Advanced_Practitioners_Physical_Assessment_Monitoring
+            " name="AIMasterRevision_Advanced_Practitioners_Physical_Assessment_Monitoring"
+            [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'NursingPhysicalAssessmentMonitoring'">
+          <h3>Nursing Physical Assessment Monitoring</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Nursing_Physical_Assessment_Monitoring
+            " name="AIMasterRevision_Nursing_Physical_Assessment_Monitoring" [init]="EditorConfiguration"></editor>
+        </section>
+
+        <section *ngIf="SelectedGeneralItem == 'MechanismOfAction'">
+          <h3>Mechanism Of Action</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Mechanism_Of_Action"
+            name="AIMasterRevision_Mechanism_Of_Action" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'PharmacoKinetics'">
+          <h3>Pharmacokinetics</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_PharmacoKinetics" name="AIMasterRevision_PharmacoKinetics"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="
+            SelectedGeneralItem == 'PharmacoKineticsAdditionalConsiderations'
+          ">
+          <h3>Pharmacokinetics Additional Considerations</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_PharmacoKinetics_Additional_Considerations
+            " name="AIMasterRevision_PharmacoKinetics_Additional_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'RouteSpecificPharmacokinetics'">
+          <h3>Route Specific Pharmacokinetics</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Route_Specific_Pharmacokinetics
+            " name="AIMasterRevision_Route_Specific_Pharmacokinetics" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'AgeSpecificPharmacokinetics'">
+          <h3>Age Specific Pharmacokinetics</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Age_Specific_Pharmacokinetics
+            " name="AIMasterRevision_Age_Specific_Pharmacokinetics" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'RelatedInformation'">
+          <h3>Pearls Related Information</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Pearls_Related_Information
+            " name="AIMasterRevision_Pearls_Related_Information" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'LabeledIndications'">
+          <h3>Labeled Indications</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_LabeledIndications"
+            name="AIMasterRevision_LabeledIndications" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Off-LabelIndications'">
+          <h3>Off-Labeled Indications</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_OffLabeledIndications"
+            name="AIMasterRevision_OffLabeledIndications" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Storage'">
+          <h3>Storage</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Storage" name="AIMasterRevision_Storage"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Stability'">
+          <h3>Stability</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Stability" name="AIMasterRevision_Stability"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'DentalInformation'">
+          <h3>Dental Information</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Dental_Information"
+            name="AIMasterRevision_Dental_Information" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Pharmacodynamics'">
+          <h3>Pharmacodynamics</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Pharmacodynamics" name="AIMasterRevision_Pharmacodynamics"
+            [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Nu'">
+          <h3>Related Information</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Related_Information"
+            name="AIMasterRevision_Related_Information" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Us'">
+          <h3>Uses Unsupported</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_UsaageOffLabeledIndications
+            " name="AIMasterRevision_UsaageOffLabeledIndications" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'Contraindications'">
+          <h3>Contraindications</h3>
+          <editor [(ngModel)]="
+              ClinicalData.AIMasterRevision_Contraindications
+            " name="ClinicalData.AIMasterRevision_Contraindications" [init]="EditorConfiguration">
+          </editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'WarningsPrecautions'">
+          <h3>Warnings Precautions</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Warnings_Precautions"
+            name="AIMasterRevision_Warnings_Precautions" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'GeriatricConsiderations'">
+          <h3>Geriatric Considerations</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Geriatric_Considerations"
+            name="AIMasterRevision_Geriatric_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'PediatricConsiderations'">
+          <h3>Pediatric Considerations</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_Pediatric_Considerations"
+            name="AIMasterRevision_Geriatric_Considerations" [init]="EditorConfiguration"></editor>
+        </section>
+        <section *ngIf="SelectedGeneralItem == 'References'">
+          <h3>References</h3>
+          <editor [(ngModel)]="ClinicalData.AIMasterRevision_References" name="AIMasterRevision_References"
+            [init]="EditorConfiguration"></editor>
+        </section>
+      </div>
+    </div>
+  </div>
+  <!-- End General Page-->
+
+  <!-- Interaction Page-->
+  <div class="tab-pane" id="interaction" [ngClass]="{ active: navTab == 'interaction' || !navTab }">
+    <div class="row">
+      <div class="col-sm-2">
+        <a (click)="openAddInteractionWindow()" class="icon-menu d-none d-sm-block rxp-left-menu-top-btt">
+          <i class="wi wi-day-sunny"></i> Add Interaction
+        </a>
+        <ul class="choose-skin list-unstyled task-subgroup-list rxp-left-sticky-menu">
+          <li appItemSelectChanger class="taskl-list-item" *ngFor="let item of InteractionMenuItems?.nodes"
+            (click)="changeSelectedInteractionItem(item.id)">
+            <div class="task-list">
+              <span class="task-title">{{ item.title }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-10 rxp-left-sticky-menu">
+        <mat-card *ngIf="isInteractionLoading" class="rxp-ingrid-loading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card>
+        <div *ngIf="!isInteractionLoading">
+          <!-- start Food Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'FoodInteractions'">
+            <h4>Food Interactions</h4>
+            <div *ngIf="InterActionFood.length != 0">
+              <div class="rxp-interaction-container" *ngFor="let interactionDetail of InterActionFood">
+                <h6 class="rxp-interaction-item-title">
+                  <i class="icon-arrow-right"></i>
+                  {{ interactionDetail.Food[0].Food_Name }}
+                  <a (click)="interactionDelete(interactionDetail, interactionDetail.Food[0].Food_Name)"><i
+                      class="icon-trash rxp-interaction-delete-btt"></i></a>
+                  <a (click)="interactionEdit(interactionDetail)"><i
+                      class="icon-pencil rxp-interaction-edit-btt"></i></a>
+                </h6>
+                <div class="rxp-interation-details">
+                  <p>
+                    <span class="rxp-interation-details-title">• Severity:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Severity[0].InteractionSeverity_Name
+                      }}</span>
+                    <span class="rxp-interation-details-title"> • Level:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.Level[0].InteractionLevel_Name }}</span>
+                    <span class="rxp-interation-details-title"> • Reliability:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Reliability[0]
+                          .InteractionReliability_Name
+                      }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Alert:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.InteractionRevision_Alert }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Patient Management:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-patientmanagment" [innerHTML]="
+                      interactionDetail.InteractionRevision_Patient_Management
+                    "></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Discussion:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                    [innerHTML]="interactionDetail.InteractionRevision_Discussion"></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Reference:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-reference"
+                    [innerHTML]="interactionDetail.InteractionRevision_Reference"></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="InterActionFood.length == 0" class="rxp-no-interaction-container">
+              <i class="icon-info"></i> No Food Interaction
+              <div class="rxp-no-interaction-waiting">
+                <i class="icon-hourglass"></i>
+              </div>
+            </div>
+          </section>
+          <!-- End Food Interactions Section -->
+
+          <!-- start Drug Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'DrugInteractions'">
+            <h4>Drug Interactions</h4>
+            <div *ngIf="InterActionAI.length != 0">
+              <div class="rxp-interaction-container" *ngFor="let interactionDetail of InterActionAI">
+                <h6 class="rxp-interaction-item-title">
+                  <i class="icon-arrow-right"></i>
+                  {{ interactionDetail.AIOrignal[0].AI_Code == queryParams['aicode']? 
+                      interactionDetail.AIForeign.length>0?
+                     interactionDetail.AIForeign[0].AI_Name :'Error !! AI was Deleted or renamed, Please update this interaction' : 
+                     interactionDetail.AIOrignal[0].AI_Name 
+                  }}
+                  <a *ngIf="interactionDetail.AIOrignal[0].AI_Code == queryParams['aicode'] 
+                      && interactionDetail.AIForeign.length>0"
+                    (click)="interactionDelete(interactionDetail, interactionDetail.AIOrignal[0].AI_Name)">
+                    <i class="icon-trash rxp-interaction-delete-btt"></i>
+                  </a>
+                  <a *ngIf="interactionDetail.AIOrignal[0].AI_Code == queryParams['aicode'] 
+                  && interactionDetail.AIForeign.length>0"
+                    (click)="interactionEdit(interactionDetail)">
+                    <i class="icon-pencil rxp-interaction-edit-btt"></i>
+                  </a>
+                </h6>
+                <div class="rxp-interation-details">
+                  <p>
+                    <span class="rxp-interation-details-title">• Severity:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Severity[0].InteractionSeverity_Name
+                      }}</span>
+                    <span class="rxp-interation-details-title"> • Level:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.Level[0].InteractionLevel_Name }}</span>
+                    <span class="rxp-interation-details-title"> • Reliability:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Reliability[0]
+                          .InteractionReliability_Name
+                      }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Alert:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.InteractionRevision_Alert }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Patient Management:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-patientmanagment" [innerHTML]="
+                      interactionDetail.InteractionRevision_Patient_Management
+                    "></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Discussion:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                    [innerHTML]="interactionDetail.InteractionRevision_Discussion"></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Reference:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-reference"
+                    [innerHTML]="interactionDetail.InteractionRevision_Reference"></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="InterActionAI.length == 0" class="rxp-no-interaction-container">
+              <i class="icon-info"></i> No Drug Interaction
+              <div class="rxp-no-interaction-waiting">
+                <i class="icon-hourglass"></i>
+              </div>
+            </div>
+          </section>
+          <!-- End Drug Interactions Section -->
+
+          <!-- start Lab Tests Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'LabTestsInteractions'">
+            <h4>Lab Tests Interactions</h4>
+            <div *ngIf="InterActionLabTest[0]">
+              <div class="rxp-interaction-container" *ngFor="let interactionDetail of InterActionLabTest">
+                <h6 class="rxp-interaction-item-title">
+                  <i class="icon-arrow-right"></i>
+                  {{ interactionDetail.LabTest[0].LabTest_Name }}
+                  <a (click)="interactionDelete(interactionDetail, interactionDetail.LabTest[0].LabTest_Name)"><i
+                      class="icon-trash rxp-interaction-delete-btt"></i></a>
+                  <a (click)="interactionEdit(interactionDetail)"><i
+                      class="icon-pencil rxp-interaction-edit-btt"></i></a>
+                </h6>
+                <div class="rxp-interation-details">
+                  <p>
+                    <span class="rxp-interation-details-title">• Severity:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Severity[0].InteractionSeverity_Name
+                      }}</span>
+                    <span class="rxp-interation-details-title"> • Level:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.Level[0].InteractionLevel_Name }}</span>
+                    <span class="rxp-interation-details-title"> • Reliability:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Reliability[0]
+                          .InteractionReliability_Name
+                      }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Alert:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.InteractionRevision_Alert }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Patient Management:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-patientmanagment" [innerHTML]="
+                      interactionDetail.InteractionRevision_Patient_Management
+                    "></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Discussion:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                    [innerHTML]="interactionDetail.InteractionRevision_Discussion"></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Reference:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-reference"
+                    [innerHTML]="interactionDetail.InteractionRevision_Reference"></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!InterActionLabTest[0]" class="rxp-no-interaction-container">
+              <i class="icon-info"></i> No Lab Test Interaction
+              <div class="rxp-no-interaction-waiting">
+                <i class="icon-hourglass"></i>
+              </div>
+            </div>
+          </section>
+          <!-- End Lab Tests Interactions Section -->
+
+          <!-- start Herbs Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'HerbsInteractions'">
+            <h4>Herbs Interactions</h4>
+            <div *ngIf="InterActionHerbs[0]">
+              <div class="rxp-interaction-container" *ngFor="let interactionDetail of InterActionHerbs">
+                <h6 class="rxp-interaction-item-title">
+                  <i class="icon-arrow-right"></i>
+                  {{ interactionDetail.Herbs[0].Herbs_Name }}
+                  <a (click)="interactionDelete(interactionDetail, interactionDetail.Herbs[0].Herbs_Name)"><i
+                      class="icon-trash rxp-interaction-delete-btt"></i></a>
+                  <a (click)="interactionEdit(interactionDetail)"><i
+                      class="icon-pencil rxp-interaction-edit-btt"></i></a>
+                </h6>
+                <div class="rxp-interation-details">
+                  <p>
+                    <span class="rxp-interation-details-title">• Severity:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Severity[0].InteractionSeverity_Name
+                      }}</span>
+                    <span class="rxp-interation-details-title"> • Level:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.Level[0].InteractionLevel_Name }}</span>
+                    <span class="rxp-interation-details-title"> • Reliability:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Reliability[0]
+                          .InteractionReliability_Name
+                      }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Alert:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.InteractionRevision_Alert }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Patient Management:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-patientmanagment" [innerHTML]="
+                      interactionDetail.InteractionRevision_Patient_Management
+                    "></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Discussion:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                    [innerHTML]="interactionDetail.InteractionRevision_Discussion"></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Reference:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-reference"
+                    [innerHTML]="interactionDetail.InteractionRevision_Reference"></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!InterActionHerbs[0]" class="rxp-no-interaction-container">
+              <i class="icon-info"></i> No Herbs Interaction
+              <div class="rxp-no-interaction-waiting">
+                <i class="icon-hourglass"></i>
+              </div>
+            </div>
+          </section>
+          <!-- End Herbs Interactions Section -->
+
+          <!-- start Alcohol & Tobacco Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'AlcoholInteractions'">
+            <h4>Alcohol & Tobacco Interactions</h4>
+            <div *ngIf="InterActionAlcohol.length != 0">
+              <div class="rxp-interaction-container" *ngFor="let interactionDetail of InterActionAlcohol">
+                <h6 class="rxp-interaction-item-title">
+                  <i class="icon-arrow-right"></i>
+                  {{ interactionDetail.Alcohol[0].Alcohol_Name }}
+                  <a (click)="interactionDelete(interactionDetail, interactionDetail.Alcohol[0].Alcohol_Name)"><i
+                      class="icon-trash rxp-interaction-delete-btt"></i></a>
+                  <a (click)="interactionEdit(interactionDetail)"><i
+                      class="icon-pencil rxp-interaction-edit-btt"></i></a>
+                </h6>
+                <div class="rxp-interation-details">
+                  <p>
+                    <span class="rxp-interation-details-title">• Severity:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Severity[0].InteractionSeverity_Name
+                      }}</span>
+                    <span class="rxp-interation-details-title"> • Level:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.Level[0].InteractionLevel_Name }}</span>
+                    <span class="rxp-interation-details-title"> • Reliability:</span>
+                    <span class="rxp-interation-details-value">
+                      {{
+                        interactionDetail.Reliability[0]
+                          .InteractionReliability_Name
+                      }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Alert:</span>
+                    <span class="rxp-interation-details-value">
+                      {{ interactionDetail.InteractionRevision_Alert }}</span>
+                  </p>
+                  <p>
+                    <span class="rxp-interation-details-title">Patient Management:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-patientmanagment" [innerHTML]="
+                      interactionDetail.InteractionRevision_Patient_Management
+                    "></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Discussion:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                    [innerHTML]="interactionDetail.InteractionRevision_Discussion"></p>
+                  <p>
+                    <span class="rxp-interation-details-title">Reference:</span>
+                  </p>
+                  <p class="rxp-interation-details-html rxp-interation-details-reference"
+                    [innerHTML]="interactionDetail.InteractionRevision_Reference"></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="InterActionAlcohol.length == 0" class="rxp-no-interaction-container">
+              <i class="icon-info"></i> No Alcohol & Tobacco Interactions
+              <div class="rxp-no-interaction-waiting">
+                <i class="icon-hourglass"></i>
+              </div>
+            </div>
+          </section>
+          <!-- End Alcohol & Tobacco Interactions Section -->
+          <section *ngIf="SelectedInteractionItem == 'InteractionGeneralInfo'">
+            <h3>Interaction General Information</h3>
+            <editor [(ngModel)]="ClinicalData.AIMasterRevision_Interaction_General_Info"
+              name="AIMasterRevision_Interaction_General_Info" [init]="EditorConfiguration"></editor>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Interaction Page-->
+
+  <!-- Dosing Page-->
+  <div class="tab-pane" id="dosing" [ngClass]="{ active: navTab == 'dosing' || !navTab }">
+    <div class="row">
+      <div class="col-sm-2">
+        <a (click)="openAddDosingWindow()" class="icon-menu d-none d-sm-block rxp-left-menu-top-btt">
+          <i class="wi wi-day-sunny"></i> Add Dosing
+        </a>
+        <ul class="choose-skin list-unstyled task-subgroup-list rxp-left-sticky-menu">
+          <li appItemSelectChanger class="taskl-list-item" *ngFor="let item of DosingAgeList"
+            (click)="changeSelectedDosingItem(item)">
+            <div class="task-list">
+              <span class="task-title">{{ item }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-10 rxp-left-sticky-menu" *ngIf="!isDosingLoading">
+        <!-- start Adult Dosing Section -->
+        <section *ngIf="SelectedDosingItem=='Adult Dosings'">
+          <h4>Adult</h4>
+          <div *ngIf="DosingAdult.length != 0">
+            <div class="rxp-interaction-container" *ngFor="let dosingDetail of DosingAdult">
+              <h6 class="rxp-interaction-item-title">
+                <i class="icon-arrow-right"></i>
+                {{ dosingDetail.Dosing_MedicalCondition_Name }}
+                <a (click)="dosingDelete(dosingDetail)"><i class="icon-trash rxp-interaction-delete-btt"></i></a>
+                <a (click)="dosingEdit(dosingDetail)"><i class="icon-pencil rxp-interaction-edit-btt"></i></a>
+              </h6>
+              <div class="rxp-interation-details">
+                <p>
+                  <span class="rxp-interation-details-title"
+                    *ngIf="dosingDetail.Dosing_Population_Code!=1">Population:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Population_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Route Name:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Route_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Discussion:</span>
+                </p>
+                <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                  [innerHTML]="dosingDetail.Dosing_Discussion"></p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="DosingAdult.length == 0" class="rxp-no-interaction-container">
+            <i class="icon-info"></i> No Adult Dosings Found
+            <div class="rxp-no-interaction-waiting">
+              <i class="icon-hourglass"></i>
+            </div>
+          </div>
+        </section>
+        <!-- End Adult Dosing Section -->
+        <!-- start Pediatric Dosing Section -->
+        <section *ngIf="SelectedDosingItem=='Pediatric Dosings'">
+          <h4>Pediatric</h4>
+          <div *ngIf="DosingPediatric.length != 0">
+            <div class="rxp-interaction-container" *ngFor="let dosingDetail of DosingPediatric">
+              <h6 class="rxp-interaction-item-title">
+                <i class="icon-arrow-right"></i>
+                {{ dosingDetail.Dosing_MedicalCondition_Name }}
+                <a (click)="dosingDelete(dosingDetail)"><i class="icon-trash rxp-interaction-delete-btt"></i></a>
+                <a (click)="dosingEdit(dosingDetail)"><i class="icon-pencil rxp-interaction-edit-btt"></i></a>
+              </h6>
+              <div class="rxp-interation-details">
+                <p>
+                  <span class="rxp-interation-details-title"
+                    *ngIf="dosingDetail.Dosing_Population_Code!=1">Population:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Population_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Route Name:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Route_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Discussion:</span>
+                </p>
+                <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                  [innerHTML]="dosingDetail.Dosing_Discussion"></p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="DosingPediatric.length == 0" class="rxp-no-interaction-container">
+            <i class="icon-info"></i> No Pediatric Dosings Found
+            <div class="rxp-no-interaction-waiting">
+              <i class="icon-hourglass"></i>
+            </div>
+          </div>
+        </section>
+        <!-- End Pediatric Dosing Section -->
+        <!-- start Geriatric Dosing Section -->
+        <section *ngIf="SelectedDosingItem=='Geriatric Dosings'">
+          <h4>Geriatric</h4>
+          <div *ngIf="DosingGeriatric.length != 0">
+            <div class="rxp-interaction-container" *ngFor="let dosingDetail of DosingGeriatric">
+              <h6 class="rxp-interaction-item-title">
+                <i class="icon-arrow-right"></i>
+                {{ dosingDetail.Dosing_MedicalCondition_Name }}
+                <a (click)="dosingDelete(dosingDetail)"><i class="icon-trash rxp-interaction-delete-btt"></i></a>
+                <a (click)="dosingEdit(dosingDetail)"><i class="icon-pencil rxp-interaction-edit-btt"></i></a>
+              </h6>
+              <div class="rxp-interation-details">
+                <p>
+                  <span class="rxp-interation-details-title"
+                    *ngIf="dosingDetail.Dosing_Population_Code!=1">Population:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Population_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Route Name:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Route_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Discussion:</span>
+                </p>
+                <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                  [innerHTML]="dosingDetail.Dosing_Discussion"></p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="DosingGeriatric.length == 0" class="rxp-no-interaction-container">
+            <i class="icon-info"></i> No Geriatric Dosings Found
+            <div class="rxp-no-interaction-waiting">
+              <i class="icon-hourglass"></i>
+            </div>
+          </div>
+        </section>
+        <!-- End Geriatric Dosing Section -->
+        <!-- start Neonatal Dosing Section -->
+        <section *ngIf="SelectedDosingItem=='Neonatal Dosings'">
+          <h4>Neonatal</h4>
+          <div *ngIf="DosingNeonatal.length != 0">
+            <div class="rxp-interaction-container" *ngFor="let dosingDetail of DosingNeonatal">
+              <h6 class="rxp-interaction-item-title">
+                <i class="icon-arrow-right"></i>
+                {{ dosingDetail.Dosing_MedicalCondition_Name }}
+                <a (click)="dosingDelete(dosingDetail)"><i class="icon-trash rxp-interaction-delete-btt"></i></a>
+                <a (click)="dosingEdit(dosingDetail)"><i class="icon-pencil rxp-interaction-edit-btt"></i></a>
+              </h6>
+              <div class="rxp-interation-details">
+                <p>
+                  <span class="rxp-interation-details-title"
+                    *ngIf="dosingDetail.Dosing_Population_Code!=1">Population:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Population_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Route Name:</span>
+                  <span class="rxp-interation-details-value">
+                    {{
+                      dosingDetail.Dosing_Route_Name
+                    }}</span>
+                </p>
+                <p>
+                  <span class="rxp-interation-details-title">Discussion:</span>
+                </p>
+                <p class="rxp-interation-details-html rxp-interation-details-discussion"
+                  [innerHTML]="dosingDetail.Dosing_Discussion"></p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="DosingNeonatal.length == 0" class="rxp-no-interaction-container">
+            <i class="icon-info"></i> No Neonatal Dosings Found
+            <div class="rxp-no-interaction-waiting">
+              <i class="icon-hourglass"></i>
+            </div>
+          </div>
+        </section>
+        <!-- End Dosing Section -->
+      </div>
+      <div class="col-sm-10 rxp-left-sticky-menu" *ngIf="isDosingLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+  </div>
+  <!-- End Dosing Page-->
+  
+  <!-- Comments Page-->
+  <div class="tab-pane" id="comments" [ngClass]="{ active: navTab == 'comments' || !navTab }">
+    <div class="chat">
+      <div class="chat-history">
+        <ul class="m-b-0">
+          <li  class="clearfix" *ngFor="let commentItem of ClinicalData.AIMasterRevision_Comments">
+            <div  class="message-data text-right">
+              <span class="message-data-time">
+                {{getEmployeeName(commentItem.AIMasterRevision_Comments_Employee_ID,1)}}
+                <span class="message-time-txt">{{calculateTime(commentItem.AIMasterRevision_Comments_Date)}}</span>
+              </span>
+              <img  alt="avatar" src="assets/images/user.png">
+            </div>
+            <div  class="message other-message float-right rxp-chat-message-content"> 
+              <div [innerHtml]="commentItem.AIMasterRevision_Comments_Message">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End Comments Page-->
+</div>

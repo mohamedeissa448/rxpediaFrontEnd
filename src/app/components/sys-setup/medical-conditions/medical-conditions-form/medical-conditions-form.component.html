@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="medicalConditionsFormService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Medical Condition Name*"
+        formControlName="MedicalCondition_Name"
+      />
+      <mat-error>Please enter a Medical Condition Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Description"
+        formControlName="MedicalCondition_Description"
+      />
+      <mat-error>Please enter a description</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="ICD 9"
+        formControlName="MedicalCondition_ICD9cm"
+      />
+      <mat-error>Please enter an ICD 9</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="ICD 10*"
+        formControlName="MedicalCondition_ICD10cm"
+      />
+      <mat-error>Please enter an ICD 10</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="ICD 10 AM"
+        formControlName="MedicalCondition_ICD10cmAM"
+      />
+      <mat-error>Please enter an ICD 10</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="ICD 11"
+        formControlName="MedicalCondition_ICD11cm"
+      />
+      <mat-error>Please enter an ICD 11</mat-error>
+    </mat-form-field>
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="MedicalCondition_IsActive"
+    >
+      Medical Condition Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="medicalConditionsFormService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

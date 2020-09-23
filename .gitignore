@@ -1,0 +1,14 @@
+node_modules
+dist
+e2e
+.DS_Store
+angular.json
+Gruntfile.js
+karma.conf.js
+package-lock.json
+protractor.conf.js
+tsconfig.json
+tslint.json
+browserslist
+dist.zip
+src/.htaccess

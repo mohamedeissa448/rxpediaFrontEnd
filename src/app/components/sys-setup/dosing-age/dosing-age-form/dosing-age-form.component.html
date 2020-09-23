@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form [formGroup]="dosingAgesFormService.form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Dosing Age Category Name*"
+        formControlName="UsageAge_Name"
+      />
+      <mat-error>Please enter a Dosing Age Category Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Description"
+        formControlName="UsageAge_Description"
+      />
+      <mat-error>Please enter a description</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="UsageAge_IsActive"
+    >
+      Dosing Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="dosingAgesFormService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

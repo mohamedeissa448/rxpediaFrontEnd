@@ -1,0 +1,14 @@
+.nav-item{
+    width: 33.1% !important;
+    text-align: center !important;
+}
+.rxp-text-area{
+    height: 120px;
+}
+.rxp-dialog-action-panel {
+    text-align: center;
+    padding-top: 30px;
+}
+.tab-page-containers{
+    border-color: #dee2e6;
+}

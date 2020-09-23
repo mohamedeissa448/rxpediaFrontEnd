@@ -1,0 +1,46 @@
+<a mat-list role="list">
+  <mat-list-item>
+    <button mat-button>
+      <span class="material-icons">
+        edit
+      </span>
+      <div class="task">
+        <span class="relatedTo">{{ data.Task_RelatedTo }}</span>
+        <span class="title">{{ data.Task_Title }}</span>
+        <span class="timeAgo">{{ data.Task_AssignDate }}</span>
+      </div>
+      <div class="owner">
+        <span class="owner-title"
+          >Task Owner:&nbsp;<span class="owner-name">{{
+            data.Employee_Name
+          }}</span></span
+        >
+      </div>
+    </button>
+  </mat-list-item>
+</a>
+<h3>Assign Task To:</h3>
+<div>
+  <span class="material-icons">
+    person
+  </span>
+  <form #f="ngForm" (ngSubmit)="submit(f.value)">
+    <mat-form-field>
+      <mat-select ngModel name="Task_AssignTo_Employee_Code" required>
+        <mat-option value="">-- None --</mat-option>
+        <mat-option
+          *ngFor="let emp of data.EmployeeCanAssignList"
+          [value]="emp.Employee_Code"
+        >
+          {{ emp.Employee_Name }}
+        </mat-option>
+      </mat-select>
+      <mat-label d-block>
+        <i>Select New Task Owner (Pick Employee)</i></mat-label
+      >
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="f.invalid">
+      Submit
+    </button>
+  </form>
+</div>

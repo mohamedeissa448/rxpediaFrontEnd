@@ -1,0 +1,19 @@
+.rxp-menu-icon-with-secondary{
+    margin-right: 6px !important;
+}
+.rxp-secondary-menu-icon{
+    margin-right: 0px !important;
+    font-size: 11px !important;
+    position: relative !important;
+    top: 8px !important;
+    right: 12px !important;
+    background: #f4f7f6 !important;
+    padding: 2px !important;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.rxp-side-tabs-content .tab-pane{
+    height: calc(100vh - 285px);
+    overflow: scroll;
+}

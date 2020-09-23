@@ -1,0 +1,428 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      [ngClass]="{ active: navTab == 'menu' }"
+      (click)="changeNavTab('menu')"
+      >Edit</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      [ngClass]="{ active: navTab == 'chat' }"
+      (click)="changeNavTab('chat')"
+      >Review</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      [ngClass]="{ active: navTab == 'setting' }"
+      (click)="changeNavTab('setting')"
+      >Grammer Review</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      [ngClass]="{ active: navTab == 'question' }"
+      (click)="changeNavTab('question')"
+      >Publish</a
+    >
+  </li>
+</ul>
+<div class="tab-content p-l-0 p-r-0">
+  <div
+    class="tab-pane"
+    id="menu"
+    [ngClass]="{ active: navTab == 'menu' || !navTab }"
+  >
+    <h3 *ngIf="editTasks['Master AI'].length > 0">Master AI</h3>
+    <a mat-list role="list">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of editTasks['Master AI']"
+        [routerLink]="['my-tasks/edit-ai-master-clinical-data']"
+        [queryParams]="{
+          Task_Title: task.Task_Title,
+          revisionid: task.Task_ActionDetails_Code,
+          taskid: task.Task_Code,
+          aicode: task.Task_RelatedTo_Code
+        }"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Master TN'].length > 0">Master TN</h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of editTasks['Master TN']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Country Clinical Data'].length > 0">
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of editTasks['Country Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="editTasks['Country Non Clinical Data'].length > 0">
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of editTasks['Country Non Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+  <div
+    class="tab-pane p-l-15 p-r-15"
+    id="Chat"
+    [ngClass]="{ active: navTab == 'chat' }"
+  >
+    <h3 *ngIf="reviewTasks['Master AI'] && reviewTasks['Master AI'].length > 0">
+      Master AI
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of reviewTasks['Master AI']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3 *ngIf="reviewTasks['Master TN'] && reviewTasks['Master TN'].length > 0">
+      Master TN
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of reviewTasks['Master TN']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        reviewTasks['Country Clinical Data'] &&
+        reviewTasks['Country Clinical Data'].length > 0
+      "
+    >
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of reviewTasks['Country Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        reviewTasks['Country Non Clinical Data'] &&
+        reviewTasks['Country Non Clinical Data'].length > 0
+      "
+    >
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of reviewTasks['Country Non Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+
+  <div
+    class="tab-pane p-l-15 p-r-15"
+    id="setting"
+    [ngClass]="{ active: navTab == 'setting' }"
+  >
+    <h3
+      *ngIf="
+        grammerReviewTasks['Master AI'] &&
+        grammerReviewTasks['Master AI'].length > 0
+      "
+    >
+      Master AI
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of grammerReviewTasks['Master AI']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        grammerReviewTasks['Master TN'] &&
+        grammerReviewTasks['Master TN'].length > 0
+      "
+    >
+      Master TN
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of grammerReviewTasks['Master TN']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        grammerReviewTasks['Country Clinical Data'] &&
+        grammerReviewTasks['Country Clinical Data'].length > 0
+      "
+    >
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of grammerReviewTasks['Country Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        grammerReviewTasks['Country Non Clinical Data'] &&
+        grammerReviewTasks['Country Non Clinical Data'].length > 0
+      "
+    >
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of grammerReviewTasks['Country Non Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+  <div
+    class="tab-pane p-l-15 p-r-15"
+    id="question"
+    [ngClass]="{ active: navTab == 'question' }"
+  >
+    <h3
+      *ngIf="publishTasks['Master AI'] && publishTasks['Master AI'].length > 0"
+    >
+      Master AI
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of publishTasks['Master AI']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="publishTasks['Master TN'] && publishTasks['Master TN'].length > 0"
+    >
+      Master TN
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of publishTasks['Master TN']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        publishTasks['Country Clinical Data'] &&
+        publishTasks['Country Clinical Data'].length > 0
+      "
+    >
+      Country Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of publishTasks['Country Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+    <h3
+      *ngIf="
+        publishTasks['Country Non Clinical Data'] &&
+        publishTasks['Country Non Clinical Data'].length > 0
+      "
+    >
+      Country Non Clinical Data
+    </h3>
+    <a mat-list role="list" routerLink="/hh">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let task of publishTasks['Country Non Clinical Data']"
+      >
+        <button mat-button>
+          <span class="material-icons">
+            edit
+          </span>
+          <div class="task">
+            <span class="relatedTo">{{ task.Task_RelatedTo }}</span>
+            <span class="title">{{ task.Task_Title }}</span>
+            <span class="timeAgo">{{ task.Task_AssignDate }}</span>
+          </div>
+        </button>
+      </mat-list-item>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form
+  [formGroup]="PharmacologicalCategoriesFormService.form"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-dialog-content>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Pharmacological Category Name*"
+        formControlName="Pharmaceutical_Category_Name"
+      />
+      <mat-error>Please enter a Pharmacological Category Name</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="ATC Code*"
+        formControlName="Pharmaceutical_Category_ATC_Code"
+      />
+      <mat-error>Please enter an ATC Code</mat-error>
+    </mat-form-field>
+
+    <mat-slide-toggle
+      *ngIf="title.includes('Edit')"
+      matInput
+      formControlName="Pharmaceutical_Category_IsActive"
+    >
+      Pharmacological Category Status</mat-slide-toggle
+    >
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      [disabled]="PharmacologicalCategoriesFormService.form.invalid"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>
